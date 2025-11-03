@@ -29,3 +29,10 @@ export interface doctorData {
   address:string;
   clinic_address:string;
 }
+
+export interface UserData{
+  phone_no:string;
+  address:string;
+  gender:"Male" | "Female";
+  dob:string;
+}

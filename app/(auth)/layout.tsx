@@ -12,9 +12,7 @@ export default function AuthLayout({children}:Readonly<{children:React.ReactNode
              <body
                className={`antialiased min-h-screen ${geistOutfit}`}
              >
-               {/* <main className="center_content min-h-[calc(100vh-3.8rem)]"> */}
                 {children}
-               {/* </main> */}
              </body>
            </html>
          );

@@ -1,6 +1,6 @@
 import UserSignUp from "@/components/Auth/userSignUp";
 import CheckingAuth from "@/utils/checkingAuth";
-import { Metadata } from "next";
+import { Metadata, Route } from "next";
 import { redirect } from "next/navigation";
 export const metadata:Metadata = {
   title:"Sign Up",

@@ -12,6 +12,7 @@ export default async function Login() {
   if(userAuth){
     redirect("/")
   }
+ 
   return (
     <LoginIn
       headingName="Login"

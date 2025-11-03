@@ -4,6 +4,7 @@ import Inputs from "@/components/inputs";
 import { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 export interface loginForm {
   userId: string;
@@ -31,8 +32,8 @@ export default function LoginIn({
     reset,
   } = useForm<loginForm>({
     defaultValues: {
-      userId: "arun@gmail.com",
-      password: "123456789",
+      userId: "a@gmail.com",
+      password: "1",
     },
     mode: "onChange",
   });
@@ -44,23 +45,23 @@ export default function LoginIn({
         method:"POST",
         headers: { "Content-Type": "application/json" },
         credentials:"include",
-        body: JSON.stringify({email:data.userId, password: data.password,}),
+        body: JSON.stringify({email:data?.userId, password: data?.password,}),
       });
      
       if(!res.ok){
         let errorMsg = "Login failed";
       try {
-        const payload = await res.json();
-        errorMsg = payload.message || errorMsg;
+        const payload = await res?.json();
+        errorMsg = payload?.message || errorMsg;
       } catch (parseErr) {
         // If not JSON (e.g., HTML 404), use status text
-        errorMsg = res.statusText || errorMsg;
+        errorMsg = res?.statusText || errorMsg;
       }
       alert(errorMsg);
       return 
       }
-       const payload = await res.json();
-      console.log("Logged in:", payload.user);
+       const payload = await res?.json();
+      console.log("Logged in:", payload?.user);
       const {token,name} = payload;
       sessionStorage.setItem("token",token)
       sessionStorage.setItem("loggedInUser",name)
@@ -77,6 +78,13 @@ export default function LoginIn({
     }
     reset();
   };
+  useEffect(() => {
+  const check = async () => {
+    const res = await fetch(`${BASE_URL}users/me`, { credentials: 'include' });
+    if (res.ok) route.push('/'); // If logged in, leave
+  };
+  check();
+}, []);
   return (
     <section className="w-fit  py-8 px-7 border border-gray-300 rounded-lg space-y-4 shadow-xl">
       <h2 className={`text-3xl text-center ${ headingStyle ? `${headingStyle} font-semibold`: "text-[#5e5e5e] font-bold"}`}>

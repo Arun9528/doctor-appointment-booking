@@ -2,6 +2,7 @@
 
 import { BASE_URL } from "@/base";
 import Inputs from "@/components/inputs";
+// import { useUser } from "@/hooks/userProvider";
 import { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,7 +14,8 @@ export interface signUpForm {
   confirmPassword:string;
 }
 export default function UserSignUp(){
-     const route = useRouter()
+  const route = useRouter()
+  // const {setUser} = useUser();
   const {
     handleSubmit,
     register,watch,
@@ -32,20 +34,20 @@ export default function UserSignUp(){
     try {
      
       const res = await fetch(`${BASE_URL}users/sign-up`,{method:"POST",headers:{ "Content-Type": "application/json",},
-        body:JSON.stringify({name:data.name,email:data.email,password:data.confirmPassword})})
-       if (!res.ok) {
-        const err = await res.json().catch(() => ({ message: "Unknown error" }));
-        console.error("Signup failed:", err);
-        alert(err.message || "Signup failed");
+        body:JSON.stringify({name:data?.name,email:data?.email,password:data?.confirmPassword}),credentials:"include"})
+       
+      const result = await res?.json()
+      if (!res.ok) {
+        console?.error("Signup failed:", result?.message);
+        alert(result?.message || "Signup failed");
         return;
       }
-      const result = await res.json()
       console.log("Signup success:", result);
-
+      // setUser(result?.user)
       reset();
-      route.push("/user/registration" as Route);
+      route?.replace ("/user/registration" as Route);
     } catch (error) {
-      console.error("Network error:", error);
+      console?.error("Network error:", error);
       alert("Something went wrong. Check console.");
     }
     reset()
