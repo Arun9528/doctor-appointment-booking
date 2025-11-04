@@ -1,6 +1,7 @@
 import { BASE_URL, IMAGE_URL } from "@/base";
 import SidebarSuggestion from "@/components/doctorAppointmentPage/sidebarSuggestion";
 import Modal from "@/components/modal";
+import UsingModal from "@/components/usingModal";
 import { doctorData } from "@/lib/types";
 import Image from "next/image";
 import { FaGraduationCap } from "react-icons/fa";
@@ -45,7 +46,8 @@ export default async function DocAppointment(props: PageProps<"/doctors/[special
                 </p>
               </div>
             </div>
-            <Modal doctorId={getId.id as string}/>
+            {/* <UsingModal id={getId.id as string} btnName="Book Appointment"> */}
+            {/* <Modal doctorId={getId.id as string}/> */}
           </div>
           <div className="border border-gray-200 rounded-lg p-5 shadow-lg space-y-2">
             <h2 className="text-xl font-bold ">About Me</h2>

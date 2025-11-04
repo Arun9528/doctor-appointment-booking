@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 
-
 export const typeDoctor = [
   "General physician",
   "Gynecologist",
@@ -62,17 +61,24 @@ export default function Home() {
         <div className="center_content gap-x-5">
           {typeDoctor?.map((doc, i) => (
             <Link
-              href={`/doctors/${doc === "General physician" ? "general-physician" : doc?.toLowerCase()}`}
+              href={`/doctors/${
+                doc === "General physician"
+                  ? "general-physician"
+                  : doc?.toLowerCase()
+              }`}
               key={`${doc}-${i}`}
-              className="space-y-2 transform_animation"
+              className="space-y-2 transform_animation "
             >
-              <Image
-                src={`/doctorType/${doc?.replace(" ", "_")}.png`}
-                alt="typeofDoctor"
-                width={100}
-                height={50}
-                priority
-              />
+              <div className="relative size-24 overflow-hidden">
+                <Image
+                  src={`/doctorType/${doc?.replace(" ", "_")}.png`}
+                  alt="typeofDoctor"
+                  sizes="96px"
+                  fill
+                  // style={{objectFit:"cover",height:"auto",width:"100%"}}
+                  priority
+                />
+              </div>
               <span className="text-xs font-medium">{doc}</span>
             </Link>
           ))}
@@ -87,16 +93,17 @@ export default function Home() {
             Simply browse through our extensive list of trusted doctors.
           </p>
         </div>
-        <TopDoctorList/>
+        <TopDoctorList />
         <div className="text-center">
-          <Link href={"/doctors"}
+          <Link
+            href={"/doctors"}
             className="py-2 px-7 bg-gray-200 text-[#4B5563] rounded-4xl cursor-pointer"
           >
             More
           </Link>
         </div>
       </section>
-      <section className="bg-[#5f6fff] h-[380px] grid grid-cols-2 items-center rounded-lg px-10 mt-20">
+      <section className="bg-[#5f6fff] h-[380px] grid grid-cols-2 items-center rounded-lg px-10 mt-20 relative ">
         <div className="space-y-4">
           <h2 className="text-white text-4xl font-bold px-2">
             Book Appointment With 100+ Trusted Doctors
@@ -108,9 +115,18 @@ export default function Home() {
             Create Account
           </Link>
         </div>
-       <div className="relative  h-full">
-         <Image src={"/appointment-doc-img.png"} alt="girl Picture"  width={480} height={100} priority className="absolute bottom-0 right-0 z-50" />
-       </div>
+        <div className="absolute right-0 -top-[98px]">
+          <div className="relative w-[500px] h-[500px]">
+          <Image
+            src="/appointment-doc-img.png"
+            alt="Girl Picture"
+            fill
+            priority
+            sizes="(max-width: 768px) 80vw, 500px"
+            className="object-contain  z-50"
+          />
+        </div>
+        </div>
       </section>
     </main>
   );

@@ -5,7 +5,6 @@ import Inputs from "../inputs";
 import { useRouter } from "next/navigation";
 import { Route } from "next";
 import { BASE_URL } from "@/base";
-import { useEffect } from "react";
 import { cookiesProps } from "@/utils/auth";
 
 export interface userRegistrationForm {
@@ -15,7 +14,7 @@ export interface userRegistrationForm {
   dob: string;
   gender: "Male" | "Female" | null;
   address: string;
-  profile_photo: FileList | null;
+  profile_photo: FileList | undefined;
 }
 
 export default function User_Registration_Page({
@@ -37,20 +36,22 @@ export default function User_Registration_Page({
       dob: "",
       gender: null,
       address: "",
-      profile_photo: null,
+      profile_photo: undefined,
     },
     mode: "onChange",
   });
-  const onSubmit: SubmitHandler<userRegistrationForm> = async (data) => {
-    console.log("onSubmit fired!", data, userReg);
+  const today = new Date().toISOString().split("T")[0];
+  const onSubmit: SubmitHandler<userRegistrationForm> = async(data) => {
     if (!userReg?._id) {
       console.log("id not found");
       route.push("/user/login" as Route);
       return;
     }
+ 
     const formData = new FormData();
-    if (userReg?.name?.toLowerCase() !== data?.name.toLowerCase().trim())
-      formData?.append("name", data?.name);
+    if (userReg?.name?.toLowerCase() !== data?.name.toLowerCase().trim()){
+       formData?.append("name", data?.name);
+    }
     if (data?.phone_no) formData?.append("phone_no", data?.phone_no);
     if (data?.dob) formData?.append("dob", data?.dob);
     if (data?.gender) formData?.append("gender", data?.gender);
@@ -58,7 +59,9 @@ export default function User_Registration_Page({
     if (data?.profile_photo && data?.profile_photo[0]) {
       const file = data?.profile_photo[0];
       formData?.append("profile_photo", file);
+       console.log("Appending file:", file.name, file.size, file.type);
     }
+  
     try {
       const res = await fetch(`${BASE_URL}users/${userReg?._id}`, {
         method: "PATCH",
@@ -77,34 +80,13 @@ export default function User_Registration_Page({
         alert(updated?.message || "Update failed");
         return;
       }
-      route.replace("/user/profile" as Route);
+      route.push("/user/profile" as Route);
       reset();
     } catch (error) {
       console.error("Update error:", error);
       alert("Update failed");
     }
   };
-  useEffect(() => {
-    console.log("useEffect running...");
-    const checkAuth = async () => {
-      try {
-        const res = await fetch(`${BASE_URL}users/me`, {
-          credentials: "include",
-          cache: "no-store", // Prevent stale data
-        });
-        if (!res.ok) {
-          route.push("/user/login" as Route); // Redirect if token invalid/expired
-          return;
-        }
-        const { user: freshUser } = await res.json();
-        reset();
-      } catch (error) {
-        console.error("Auth check failed:", error);
-        route.push("/user/login" as Route);
-      }
-    };
-    checkAuth();
-  }, []);
   return (
     <section className=" border border-gray-300 p-7 rounded-lg shadow-md">
       <h1 className="text-3xl font-bold">Welcome</h1>
@@ -137,18 +119,20 @@ export default function User_Registration_Page({
           label="Phone No."
           name="phone_no"
           register={register}
-          validation={{ required: "Phone is Required" }}
+          validation={{ required: "Phone is Required",pattern:{value:/^\d{10}$/,message:"Phone must be exactly 10 digits"} }}
+          maxLength={10}
           placeholder="Enter your Phone"
-          error={errors?.email}
+          error={errors?.phone_no}
         />
         <Inputs
           inputType="date"
           label="Date of Birth"
           name="dob"
           register={register}
-          validation={{ required: "DOB is Required" }}
+          validation={{ required: "DOB is Required",validate:(val)=> val && val <= today || "DOB cannot be in the future" }}
           placeholder="Enter your DOB."
           error={errors?.dob}
+          max={today}
         />
         <div>
           <label htmlFor="genderid" className="text-[#5e5e5e] font-medium">

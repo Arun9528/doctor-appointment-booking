@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import {
@@ -14,7 +14,14 @@ import { AddDocForm } from "./adding_Doctor";
 import { ProfileProps } from "./doctor_Profile";
 import { userRegistrationForm } from "./Auth/user_registration_page";
 
-interface InputsProps<T extends loginForm | signUpForm | AddDocForm | ProfileProps | userRegistrationForm> {
+interface InputsProps<
+  T extends
+    | loginForm
+    | signUpForm
+    | AddDocForm
+    | ProfileProps
+    | userRegistrationForm
+> {
   inputType: string;
   label: string;
   name: Path<T>;
@@ -23,10 +30,19 @@ interface InputsProps<T extends loginForm | signUpForm | AddDocForm | ProfilePro
   error?: FieldError | undefined;
   placeholder?: string;
   divStyle?: string;
-  disabled?:boolean;
-  labelStyle?:string;
+  disabled?: boolean;
+  labelStyle?: string;
+  maxLength?: number;
+  max?:string | number;
 }
-export default function Inputs<T extends loginForm | signUpForm | AddDocForm | ProfileProps | userRegistrationForm>({
+export default function Inputs<
+  T extends
+    | loginForm
+    | signUpForm
+    | AddDocForm
+    | ProfileProps
+    | userRegistrationForm
+>({
   inputType,
   label,
   name,
@@ -34,24 +50,46 @@ export default function Inputs<T extends loginForm | signUpForm | AddDocForm | P
   validation,
   error,
   placeholder = "",
-  divStyle = "",disabled = false,labelStyle = " "
+  divStyle = "",
+  disabled = false,
+  labelStyle = " ",
+  maxLength,max = ""
 }: InputsProps<T>) {
-    const [showPwd,setShowPwd] = useState<boolean>(false);
-    const handleClick = ()=>{
-        setShowPwd(prev => !prev)
-    } 
+  const [showPwd, setShowPwd] = useState<boolean>(false);
+  const handleClick = () => {
+    setShowPwd((prev) => !prev);
+  };
+  let inputMode:
+    | React.HTMLAttributes<HTMLInputElement>["inputMode"]
+    | undefined;
+  if (inputType === "number" || inputType === "tel") inputMode = "numeric";
+  else if (inputType === "email") inputMode = "email";
+  else if (inputType === "text") inputMode = "text";
+  else inputMode = undefined; 
   return (
     <div className={`relative ${divStyle}`}>
-      <label htmlFor={`${label}-${inputType}`} className={`text-[#5e5e5e] font-medium pl-1 ${labelStyle}`}>{label}</label>
+      <label
+        htmlFor={`${label}-${inputType}`}
+        className={`text-[#5e5e5e] font-medium pl-1 ${labelStyle}`}
+      >
+        {label}
+      </label>
       <input
-        type={inputType === "password" ? showPwd ? "text" : "password" : inputType}
+        type={
+          inputType === "password" ? (showPwd ? "text" : "password") : inputType
+        }
         id={`${label}-${inputType}`}
         {...register(name, validation)}
         placeholder={placeholder}
         className={`w-full py-2 px-3 border outline-0 rounded-md text-black/70 
-        ${error ? "border-red-500" : "border-gray-300"}`}
+        ${error ? "border-red-500" : "border-gray-300"}
+        ${disabled ? "bg-gray-400 cursor-not-allowed" : ""}
+        `}
         autoComplete="off"
-        disabled = {disabled}
+        disabled={disabled}
+        inputMode={inputMode}
+        maxLength={maxLength || undefined}
+        max={max || undefined}
       />
       {error && (
         <p className="text-red-500 text-xs  absolute top-full">
@@ -59,9 +97,13 @@ export default function Inputs<T extends loginForm | signUpForm | AddDocForm | P
         </p>
       )}
       {inputType === "password" && (
-        <button type="button" className={`absolute right-3.5 top-1/2 translate-1  cursor-pointer
-         ${error ? "text-red-500" : "text-black/80"}`} onClick={handleClick}>
-            {showPwd ? <FaEye/> : <FaEyeSlash/>}
+        <button
+          type="button"
+          className={`absolute right-3.5 top-1/2 translate-1  cursor-pointer
+         ${error ? "text-red-500" : "text-black/80"}`}
+          onClick={handleClick}
+        >
+          {showPwd ? <FaEye /> : <FaEyeSlash />}
         </button>
       )}
     </div>

@@ -6,14 +6,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { RiArrowUpSLine } from "react-icons/ri";
 import { AnimatePresence, motion } from "motion/react";
-import { BASE_URL } from "@/base";
+import { BASE_URL, IMAGE_URL } from "@/base";
 import { cookiesProps } from "@/utils/auth";
 interface SidebarLinksValue {
   label: string;
   href: Route;
 }
-interface headerProps{
-  userCookie:cookiesProps | null
+interface headerProps {
+  userCookie: cookiesProps | null;
 }
 const sidebarLinks: SidebarLinksValue[] = [
   { label: "Home", href: "/" },
@@ -22,9 +22,9 @@ const sidebarLinks: SidebarLinksValue[] = [
   { label: "Contact", href: "/contact-us" },
 ];
 
-export default function Header({userCookie}:headerProps) {
+export default function Header({ userCookie }: headerProps) {
   const [showOption, setShowOption] = useState<boolean>(false);
-  const [cookieData, setCookieData] = useState<cookiesProps | null>(userCookie)
+  const [cookieData, setCookieData] = useState<cookiesProps | null>(userCookie);
   const path = usePathname();
   const selectPath = path?.split("/")[1];
   const containerRef = useRef<HTMLDivElement>(null);
@@ -45,8 +45,8 @@ export default function Header({userCookie}:headerProps) {
   const handelClickOption = () => {
     setShowOption((prev) => !prev);
   };
-  const handleNavigation = async ( )=>{
-     try {
+  const handleNavigation = async () => {
+    try {
       // call backend logout which should clear the HttpOnly cookie
       await fetch(`${BASE_URL}users/logout`, {
         method: "POST",
@@ -58,10 +58,10 @@ export default function Header({userCookie}:headerProps) {
     } finally {
       // client-side redirect to login or homepage
       route.replace("/");
-      setCookieData(null)
+      setCookieData(null);
     }
-  }
-  
+  };
+  // console.log(IMAGE_URL+cookieData?.photo)
   return (
     <header className="border-b border-gray-300 shadow-sm py-3 px-20 flex justify-between items-center ">
       <Link href={"/"} className="text-xl font-bold text-black/80">
@@ -101,74 +101,85 @@ export default function Header({userCookie}:headerProps) {
         </Link>
       </nav>
       {cookieData ? (
-          <div
-        ref={containerRef}
-        className="cursor-pointer flex items-center gap-x-1.5 relative"
-        onClick={handelClickOption}
-        role="button"
-        aria-expanded={showOption}
-        aria-haspopup="menu"
-        aria-controls="options-menu"
-      >
-        <button
-          type="button"
-          className="size-8 rounded-full overflow-hidden cursor-pointer"
+        <div
+          ref={containerRef}
+          className="cursor-pointer flex items-center gap-x-1.5 relative"
+          onClick={handelClickOption}
+          role="button"
+          aria-expanded={showOption}
+          aria-haspopup="menu"
+          aria-controls="options-menu"
         >
-          <Image src={"/dog.png"} alt="profile Photo" width={100} height={50} />
-        </button>
-        <motion.button
-          initial={{ rotate: 180 }}
-          animate={{ rotate: showOption ? 360 : 180 }}
-          exit={{ rotate: 180 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          type="button"
-          className="text-lg cursor-pointer"
+          <button
+            type="button"
+            className="size-8 rounded-full overflow-hidden cursor-pointer"
+          >
+            <Image
+              src={`${IMAGE_URL + userCookie?.photo || "/dog.png"}`}
+              alt="profile Photo"
+              width={100}
+              height={100}
+              unoptimized
+              loading="eager"
+              priority
+              style={{ objectFit: "cover"}}
+            />
+          </button>
+          <motion.button
+            initial={{ rotate: 180 }}
+            animate={{ rotate: showOption ? 360 : 180 }}
+            exit={{ rotate: 180 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            type="button"
+            className="text-lg cursor-pointer"
+          >
+            <RiArrowUpSLine />
+          </motion.button>
+          <AnimatePresence mode="wait">
+            {showOption && (
+              <motion.div
+                layout
+                initial={{ height: 0 }}
+                animate={{ height: "auto" }}
+                exit={{ height: 0 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="z-50 absolute top-12 -right-1 flex flex-col w-max bg-gray-100 rounded-lg px-2 py-2 gap-.5 shadow-2xl overflow-hidden "
+              >
+                <p className="text-center font-medium text-sm pt-3 pb-1 ">
+                  {cookieData?.name}
+                </p>
+                <hr className="border-2 border-black/10" />
+                <Link
+                  href={"/user/profile" as Route}
+                  className="hover:bg-gray-200 rounded-md px-4 py-1 mt-2"
+                >
+                  Profile
+                </Link>
+                <Link
+                  href={"/user/my-appointments" as Route}
+                  className="hover:bg-gray-200 rounded-md px-4 py-1"
+                >
+                  My Appointments
+                </Link>
+                <button
+                  type="button"
+                  className="hover:bg-gray-200 rounded-md px-4 py-1 text-start"
+                  onClick={handleNavigation}
+                >
+                  Logout
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      ) : (
+        <Link
+          href={"/user/login" as Route}
+          className="bg-sky-500 px-5 py-2 rounded-3xl text-white cursor-pointer text-sm font-medium"
         >
-          <RiArrowUpSLine />
-        </motion.button>
-        <AnimatePresence mode="wait">
-          {showOption && (
-            <motion.div
-              layout
-              initial={{ height: 0 }}
-              animate={{ height: "auto" }}
-              exit={{ height: 0 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="z-50 absolute top-12 -right-1 flex flex-col w-max bg-gray-100 rounded-lg px-2 py-2 gap-.5 shadow-2xl overflow-hidden "
-            >
-              <p className="text-center font-medium text-sm pt-3 pb-1 ">{cookieData?.name}</p>
-              <hr className="border-2 border-black/10" />
-              <Link
-                href={"/user/profile" as Route}
-                className="hover:bg-gray-200 rounded-md px-4 py-1 mt-2"
-              >
-                Profile
-              </Link>
-              <Link
-                href={"/user/my-appointments" as Route}
-                className="hover:bg-gray-200 rounded-md px-4 py-1"
-              >
-                My Appointments
-              </Link>
-              <button
-                type="button"
-                className="hover:bg-gray-200 rounded-md px-4 py-1 text-start"
-                onClick={handleNavigation}
-              >
-                Logout
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      ) : (<Link
-        href={"/user/login" as Route} 
-        className="bg-sky-500 px-5 py-2 rounded-3xl text-white cursor-pointer text-sm font-medium"
-      >
-        Login / SignUp
-      </Link>) }
-      
-      
+          Login / SignUp
+        </Link>
+      )}
     </header>
   );
 }

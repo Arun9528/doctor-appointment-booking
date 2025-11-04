@@ -12,16 +12,17 @@ export default async function Cards({
 }: CardsProps) {
   return (
     <div className=" border border-[#C9D8FF] w-60 h-[350px] rounded-lg overflow-hidden flex flex-col transform_animation">
-      <div className="bg-[#EAEFFF] h-60 relative ">
-        <Image
-          src={`${IMAGE_URL}${data?.profile_photo}`}
-          alt="doctorPhoto"
-          width={170}
-          height={50}
-          priority
-          unoptimized
-          className="absolute bottom-0 left-1/2 -translate-x-1/2"
-        />
+      <div className="bg-[#EAEFFF] h-60 relative overflow-hidden">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200px] h-[200px]">
+          <Image
+            src={`${IMAGE_URL}${data?.profile_photo}`}
+            alt="doctorPhoto"
+            fill
+            priority
+            unoptimized
+            className="object-contain"
+          />
+        </div>
       </div>
       <div className=" px-3 flex-1 flex flex-col justify-center gap-y-1.5 py-3">
         <p className="text-[10px] text-sky-500 font-medium bg-[#CFE4F7] px-3 py-1 w-fit rounded-4xl">

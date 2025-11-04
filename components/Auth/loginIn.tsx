@@ -14,7 +14,7 @@ interface LoginInProps {
   headingName: "Admin" | "Doctor" | "Login";
   paraTitle: string;
   linkRoute: Route;
-  IsspanTag?: boolean
+  IsspanTag?: boolean;
   headingStyle?: string;
 }
 export default function LoginIn({
@@ -32,63 +32,69 @@ export default function LoginIn({
     reset,
   } = useForm<loginForm>({
     defaultValues: {
-      userId: "a@gmail.com",
+      userId: "d@gmail.com",
       password: "1",
     },
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<loginForm> = async(data) => {
-
+  const onSubmit: SubmitHandler<loginForm> = async (data) => {
     try {
-      const res = await fetch(`${BASE_URL}users/login`,{
-        method:"POST",
+      const res = await fetch(`${BASE_URL}users/login`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials:"include",
-        body: JSON.stringify({email:data?.userId, password: data?.password,}),
+        credentials: "include",
+        body: JSON.stringify({ email: data?.userId, password: data?.password }),
       });
-     
-      if(!res.ok){
+      if (!res.ok) {
         let errorMsg = "Login failed";
-      try {
-        const payload = await res?.json();
-        errorMsg = payload?.message || errorMsg;
-      } catch (parseErr) {
-        // If not JSON (e.g., HTML 404), use status text
-        errorMsg = res?.statusText || errorMsg;
+        try {
+          const payload = await res?.json();
+          errorMsg = payload?.message || errorMsg;
+        } catch (parseErr) {
+          // If not JSON (e.g., HTML 404), use status text
+          errorMsg = res?.statusText || errorMsg;
+        }
+        alert(errorMsg);
+        return;
       }
-      alert(errorMsg);
-      return 
+      const payload = await res?.json();
+      // console.log("Logged in:", payload?.user);
+      const {name } = payload;
+   
+      // sessionStorage.setItem("loggedInUser",name)
+      // sessionStorage.setItem("loggedInUserData",payload)
+      if (headingName === "Login") {
+        route.push("/" as Route);
+      } else if (headingName === "Admin") {
+        route.push("/admin/admin-dashboard" as Route);
+      } else if (headingName === "Doctor") {
+        route.push("/doctor/doctor-dashboard" as Route);
       }
-       const payload = await res?.json();
-      console.log("Logged in:", payload?.user);
-      const {token,name} = payload;
-      sessionStorage.setItem("token",token)
-      sessionStorage.setItem("loggedInUser",name)
-      if(headingName === "Login"){
-       route.push("/");
-    }else if(headingName === "Admin"){
-      route.push("/admin/admin-dashboard" as Route)
-    }else if(headingName === "Doctor"){
-      route.push("/doctor/doctor-dashboard" as Route)
-    }
     } catch (error) {
-       console.error(error);
+      console.error(error);
       alert("Network error");
     }
     reset();
   };
-  useEffect(() => {
-  const check = async () => {
-    const res = await fetch(`${BASE_URL}users/me`, { credentials: 'include' });
-    if (res.ok) route.push('/'); // If logged in, leave
-  };
-  check();
-}, []);
+  //   useEffect(() => {
+  //   const check = async () => {
+  //     const res = await fetch(`${BASE_URL}users/me`, { credentials: 'include' });
+  //     if (res.ok) route.push('/'); // If logged in, leave
+  //   };
+  //   check();
+  // }, []);
   return (
     <section className="w-fit  py-8 px-7 border border-gray-300 rounded-lg space-y-4 shadow-xl">
-      <h2 className={`text-3xl text-center ${ headingStyle ? `${headingStyle} font-semibold`: "text-[#5e5e5e] font-bold"}`}>
-        {headingName} {IsspanTag ? <span className="!text-[#5e5e5e]">Login</span> : ""}
+      <h2
+        className={`text-3xl text-center ${
+          headingStyle
+            ? `${headingStyle} font-semibold`
+            : "text-[#5e5e5e] font-bold"
+        }`}
+      >
+        {headingName}{" "}
+        {IsspanTag ? <span className="!text-[#5e5e5e]">Login</span> : ""}
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Inputs
