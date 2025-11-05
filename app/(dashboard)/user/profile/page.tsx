@@ -1,5 +1,5 @@
 import { BASE_URL, IMAGE_URL } from "@/base";
-import Modal from "@/components/modal";
+import EditUserProfile from "@/components/user/edituserProfile";
 import { UserData } from "@/lib/types";
 import CheckingAuth from "@/utils/checkingAuth";
 import { Metadata, Route } from "next";
@@ -36,15 +36,15 @@ export default async function UserProfile() {
     const UserProfileData: { user: UserData } = await res.json();
     return (
       <section className="px-20 flex flex-col items-center pt-10 gap-3 relative">
-     
+      <EditUserProfile userData={userAuth}  userProfileData={UserProfileData?.user}/>
         <Image
           src={userAuth?.photo ? `${IMAGE_URL}${userAuth.photo}` : "/dog.png"}
           alt="User Profile Photo"
-          width={170}
-          height={170}
+          width={200}
+          height={200}
           unoptimized
-          loading="lazy"
-          style={{ width: "auto", height: "auto", objectFit: "cover"}}
+          loading="eager"
+          style={{ width: "200px", height: "200px", objectFit: "cover",borderRadius:"50%"}}
         />
         <h2 className="text-2xl text-[#5e5e5e]  font-bold capitalize">
           {userAuth?.name}
@@ -76,7 +76,7 @@ export default async function UserProfile() {
               </p>
               <p>
                 <span className="text-[#5e5e5e] font-medium">DOB : </span>{" "}
-                <span>{UserProfileData?.user?.dob}</span>
+                <span>{UserProfileData?.user?.dob.split("-").reverse().join("-")}</span>
               </p>
             </div>
           </div>

@@ -34,6 +34,7 @@ interface InputsProps<
   labelStyle?: string;
   maxLength?: number;
   max?:string | number;
+  value?: "Male" | "Female" | null
 }
 export default function Inputs<
   T extends
@@ -53,7 +54,7 @@ export default function Inputs<
   divStyle = "",
   disabled = false,
   labelStyle = " ",
-  maxLength,max = ""
+  maxLength,max = "",value = null
 }: InputsProps<T>) {
   const [showPwd, setShowPwd] = useState<boolean>(false);
   const handleClick = () => {
@@ -83,13 +84,14 @@ export default function Inputs<
         placeholder={placeholder}
         className={`w-full py-2 px-3 border outline-0 rounded-md text-black/70 
         ${error ? "border-red-500" : "border-gray-300"}
-        ${disabled ? "bg-gray-400 cursor-not-allowed" : ""}
+        ${disabled ? "bg-gray-300 cursor-not-allowed text-gray-500" : ""}
         `}
         autoComplete="off"
         disabled={disabled}
         inputMode={inputMode}
         maxLength={maxLength || undefined}
         max={max || undefined}
+        value={value || undefined}
       />
       {error && (
         <p className="text-red-500 text-xs  absolute top-full">

@@ -1,16 +1,15 @@
 "use client";
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
-import AppointmentRegister from "./doctorAppointmentPage/AppoitmentRegister";
+import { motion } from "motion/react";
 interface ModalProps {
   children: React.ReactNode;
+  handleClickModal: () => void;
 }
-export default function Modal({ children }: ModalProps) {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const handleClickModal = () => setShowModal((prev) => !prev);
+export default function Modal({ children,handleClickModal}: ModalProps) {
   return (
-    <motion.div
-      className="fixed inset-0 bg-black/70 center_content min-h-screen "
+    <section>
+      
+      <motion.div
+      className="fixed inset-0 bg-black/80 center_content min-h-screen "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -30,11 +29,11 @@ export default function Modal({ children }: ModalProps) {
           type: "spring",
           stiffness: 300,
         }}
-        className="w-2xl h-auto bg-white rounded-lg p-4 "
+        className="w-3xl h-auto bg-white rounded-lg p-4 "
       >
-        {/* <AppointmentRegister handleClickModal={handleClickModal} doctorId={doctorId}/>  */}
         {children}
       </motion.section>
     </motion.div>
+    </section>
   );
 }

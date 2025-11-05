@@ -1,7 +1,6 @@
 import { BASE_URL, IMAGE_URL } from "@/base";
 import SidebarSuggestion from "@/components/doctorAppointmentPage/sidebarSuggestion";
-import Modal from "@/components/modal";
-import UsingModal from "@/components/usingModal";
+import AddAppointment from "@/components/user/addAppointment";
 import { doctorData } from "@/lib/types";
 import Image from "next/image";
 import { FaGraduationCap } from "react-icons/fa";
@@ -11,7 +10,7 @@ export default async function DocAppointment(props: PageProps<"/doctors/[special
   try {
     const specialtyName = (await props?.params)?.specialty;
     const getId = await props?.searchParams;
-    const res = await fetch(`${BASE_URL}doctors/${getId?.id}`)
+    const res = await fetch(`${BASE_URL}doctors/${getId?.id}`,{cache:"no-store"})
     if(!res.ok) throw new Error(`fetching error ${res?.status}`)
     const doctorDetails:doctorData = await res?.json();
     return (
@@ -46,8 +45,9 @@ export default async function DocAppointment(props: PageProps<"/doctors/[special
                 </p>
               </div>
             </div>
-            {/* <UsingModal id={getId.id as string} btnName="Book Appointment"> */}
-            {/* <Modal doctorId={getId.id as string}/> */}
+            
+            <AddAppointment doctorId={getId?.id as string}/>
+           
           </div>
           <div className="border border-gray-200 rounded-lg p-5 shadow-lg space-y-2">
             <h2 className="text-xl font-bold ">About Me</h2>

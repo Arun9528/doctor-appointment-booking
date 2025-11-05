@@ -11,5 +11,5 @@ export default async function UserRegistration(){
      if(!userAuth){
        redirect("/user/login" as Route)
      }
-    return <User_Registration_Page  userReg={userAuth}/>
+    return <User_Registration_Page  userReg={userAuth} isEdit={false} headingTitle="" />
 }

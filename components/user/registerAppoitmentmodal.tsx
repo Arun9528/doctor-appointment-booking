@@ -2,8 +2,8 @@
 
 import { AnimatePresence } from "motion/react";
 import { useState } from "react";
-import Modal from "./modal";
-import AppointmentRegister from "./doctorAppointmentPage/AppoitmentRegister";
+import Modal from "../modal";
+import AppointmentRegister from "../doctorAppointmentPage/AppoitmentRegister";
 interface UsingModalProps {
   btnName: string;
   id: string;
@@ -26,7 +26,7 @@ export default function UsingModal({
       </button>
       <AnimatePresence mode="wait">
         {showModal && (
-          <Modal>
+          <Modal handleClickModal={handleClickModal} btnName={"Book Appointment"}>
             <AppointmentRegister
               handleClickModal={handleClickModal}
               doctorId={id}

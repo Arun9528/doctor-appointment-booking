@@ -36,3 +36,17 @@ export interface UserData{
   gender:"Male" | "Female";
   dob:string;
 }
+export interface miniDoctorData{
+   
+  name:string;
+  profile_photo:string;
+  appointmentFee:number;
+  clinic_address:string;
+  category:{_id:string,name:string}
+}
+export interface myAppointment{
+  date:string;
+  timeSlot:string;
+  providerId:miniDoctorData
+ _id:string;
+}
