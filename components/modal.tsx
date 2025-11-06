@@ -3,8 +3,9 @@ import { motion } from "motion/react";
 interface ModalProps {
   children: React.ReactNode;
   handleClickModal: () => void;
+  sectionStyle?:string;
 }
-export default function Modal({ children,handleClickModal}: ModalProps) {
+export default function Modal({ children,handleClickModal,sectionStyle = ""}: ModalProps) {
   return (
     <section>
       
@@ -29,7 +30,7 @@ export default function Modal({ children,handleClickModal}: ModalProps) {
           type: "spring",
           stiffness: 300,
         }}
-        className="w-3xl h-auto bg-white rounded-lg p-4 "
+        className={`${sectionStyle ? sectionStyle : "w-3xl"} h-auto bg-white rounded-lg p-4 `}
       >
         {children}
       </motion.section>

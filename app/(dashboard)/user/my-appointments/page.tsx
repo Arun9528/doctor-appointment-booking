@@ -25,13 +25,19 @@ export default async function MyAppointments() {
     const data = await res.json();
     const appointmentList: myAppointment[] = data?.appointments;
     console.log(appointmentList);
-    
+    const formatDate = (cancelDate:string) =>{
+       const date = new Date(cancelDate);
+       const format = date?.toLocaleString("en-GB",{hour12:true,month:"short",year:"numeric",day:"2-digit",minute:"2-digit",hour:"2-digit"})
+       return format
+    }
     return (
       <section className="px-20 pb-5  pt-10  space-y-5">
         <h2 className="text-2xl font-semibold">My Appointments</h2>
-       {
-        appointmentList?.map(appointment => (
-           <section key={appointment?._id} className="border border-gray-300 rounded-lg shadow-md  p-3 flex items-center justify-between gap-2">
+        {appointmentList?.map((appointment) => (
+          <section
+            key={appointment?._id}
+            className="border border-gray-300 rounded-lg shadow-md  p-3 flex items-center justify-between gap-2"
+          >
             <div className="flex items-center gap-x-5">
               <div className="bg-gray-200 rounded-lg">
                 <Image
@@ -44,8 +50,12 @@ export default async function MyAppointments() {
                 />
               </div>
               <div>
-                <h3 className="font-medium text-lg">{appointment?.providerId?.name}</h3>
-                <p className="text-xs text-[#5e5e5e] ">{appointment?.providerId?.category?.name}</p>
+                <h3 className="font-medium text-lg">
+                  {appointment?.providerId?.name}
+                </h3>
+                <p className="text-xs text-[#5e5e5e] ">
+                  {appointment?.providerId?.category?.name}
+                </p>
                 <p>
                   <span className="text-[#5e5e5e] font-semibold text-sm">
                     Address:
@@ -59,23 +69,58 @@ export default async function MyAppointments() {
                     Date & Time:
                   </span>{" "}
                   <span className="text-black/80 text-sm">
-                   {appointment?.date?.split("T")[0]?.split("-")?.reverse().join("-")} | {appointment?.timeSlot}
+                    {appointment?.date
+                      ?.split("T")[0]
+                      ?.split("-")
+                      ?.reverse()
+                      .join("-")}{" "}
+                    | {appointment?.timeSlot}
+                  </span>
+                </p>
+                <p className=" flex items-center gap-x-1 text-sm">
+                  <span className="font-semibold text-[#5e5e5e]">
+                    Appointment Fee :{" "}
+                  </span>
+                  <span className="text-black/80 text-sm">
+                    {" "}
+                    &#8377; {appointment?.providerId?.appointmentFee}
+                  </span>
+                </p>
+                <p className=" flex items-center gap-x-1 text-sm">
+                  <span className="font-semibold text-[#5e5e5e]">
+                    Created At :{" "}
+                  </span>
+                  <span className="text-black/80 text-sm">
+                   {formatDate(appointment?.createdAt)}
                   </span>
                 </p>
               </div>
             </div>
-      
-            <button
-              type="button"
-              className="text-[#5e5e5e] border border-gray-300 px-3 py-2 rounded-md cursor-pointer hover:bg-red-600
+            {appointment?.status === "pending" && (
+              <button
+                type="button"
+                className="text-[#5e5e5e] border border-gray-300 px-3 py-2 rounded-md cursor-pointer hover:bg-red-600
            hover:text-white transition-colors duration-500 ease-in-out text-sm"
-            >
-              Cancel Appointment
-            </button>
-           
+              >
+                Cancel Appointment
+              </button>
+            )}
+            {appointment?.status === "cancelled" && (
+              <div className="text-center">
+                <p>
+                  <span className=" text-sm font-semibold text-black/70">CancelledAt:</span>{" "}
+                  <span className="text-sm font-medium text-black/90">{formatDate(appointment?.cancellation?.cancelledAt)}</span>
+                </p>
+                <p >
+                 <span className=" text-sm font-semibold text-black/70">CancelledBy:</span>{" "}
+                 <span >{appointment?.cancellation?.cancelledBy === "patient" ? "You"
+                    : appointment?.cancellation?.cancelledBy}</span>
+                </p>
+                <p className="capitalize text-red-600 font-medium">{appointment?.status}</p>
+              </div>
+            )}
           </section>
-        ))
-       }
+        ))}
       </section>
     );
   } catch (error) {

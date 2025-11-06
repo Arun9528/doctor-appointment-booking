@@ -44,9 +44,19 @@ export interface miniDoctorData{
   clinic_address:string;
   category:{_id:string,name:string}
 }
+export interface cancellationProp{
+  cancelledAt:string;
+  cancelledBy:"patient" | "doctor";
+  reason?:string;
+  remarkToPatient?:string;
+}
 export interface myAppointment{
   date:string;
   timeSlot:string;
   providerId:miniDoctorData
  _id:string;
+  status:"pending" | "cancelled"
+  cancellation:cancellationProp
+  createdAt:string;
+
 }

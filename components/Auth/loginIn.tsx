@@ -1,6 +1,7 @@
 "use client";
 import { BASE_URL } from "@/base";
 import Inputs from "@/components/inputs";
+import Loginfetching from "@/utils/loginfetching";
 import { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,14 @@ interface LoginInProps {
   IsspanTag?: boolean;
   headingStyle?: string;
 }
+export interface loginData{
+  message:string;
+  success:boolean;
+  email?:string;
+  name?:string;
+  photo?:string;
+  _id?:string;
+}
 export default function LoginIn({
   headingName,
   paraTitle,
@@ -32,43 +41,53 @@ export default function LoginIn({
     reset,
   } = useForm<loginForm>({
     defaultValues: {
-      userId: "d@gmail.com",
+      userId: "gp_001@example.com",
       password: "1",
     },
     mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
+    const bodyData = {
+      email: data?.userId,
+      password: data?.password,
+    }
     try {
-      const res = await fetch(`${BASE_URL}users/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email: data?.userId, password: data?.password }),
-      });
-      if (!res.ok) {
-        let errorMsg = "Login failed";
-        try {
-          const payload = await res?.json();
-          errorMsg = payload?.message || errorMsg;
-        } catch (parseErr) {
-          // If not JSON (e.g., HTML 404), use status text
-          errorMsg = res?.statusText || errorMsg;
-        }
-        alert(errorMsg);
-        return;
-      }
-      const payload = await res?.json();
-      // console.log("Logged in:", payload?.user);
-      const {name } = payload;
-   
-      // sessionStorage.setItem("loggedInUser",name)
-      // sessionStorage.setItem("loggedInUserData",payload)
+      let payload;
       if (headingName === "Login") {
+        // const res = await fetch(`${BASE_URL}users/login`, {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   credentials: "include",
+        //   body: JSON.stringify({
+        //     email: data?.userId,
+        //     password: data?.password,
+        //   }),
+        // });
+        // if (!res.ok) {
+        //   let errorMsg = "Login failed";
+        //   try {
+        //     const payload = await res?.json();
+        //     errorMsg = payload?.message || errorMsg;
+        //   } catch (parseErr) {
+        //     // If not JSON (e.g., HTML 404), use status text
+        //     errorMsg = res?.statusText || errorMsg;
+        //   }
+        //   alert(errorMsg);
+        //   return;
+        // }
+        // const payload = await res?.json();
+        // // console.log("Logged in:", payload?.user);
+        // const { name } = payload;
+        payload = await Loginfetching("users/login",bodyData)
+        if(!payload) return 
+        
         route.push("/" as Route);
       } else if (headingName === "Admin") {
         route.push("/admin/admin-dashboard" as Route);
       } else if (headingName === "Doctor") {
+        payload = await Loginfetching("doctors/login",bodyData)
+        if(!payload) return 
         route.push("/doctor/doctor-dashboard" as Route);
       }
     } catch (error) {
@@ -77,13 +96,7 @@ export default function LoginIn({
     }
     reset();
   };
-  //   useEffect(() => {
-  //   const check = async () => {
-  //     const res = await fetch(`${BASE_URL}users/me`, { credentials: 'include' });
-  //     if (res.ok) route.push('/'); // If logged in, leave
-  //   };
-  //   check();
-  // }, []);
+
   return (
     <section className="w-fit  py-8 px-7 border border-gray-300 rounded-lg space-y-4 shadow-xl">
       <h2

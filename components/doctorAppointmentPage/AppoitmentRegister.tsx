@@ -16,15 +16,16 @@ interface AppointmentForm {
 interface AppointmentProps {
   handleClickModal: () => void;
   doctorId: string;
+  handleBookingSuccess: ()=> void;
 }
 export default function AppointmentRegister({
   handleClickModal,
-  doctorId,
+  doctorId, handleBookingSuccess
 }: AppointmentProps) {
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const now = new Date();
   const {
-    register,
+    // register,
     handleSubmit,
     reset,
     formState: { errors },
@@ -46,21 +47,19 @@ export default function AppointmentRegister({
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({date:data?.appointmentDate?.toLocaleDateString("en-CA") ,timeSlot:data?.appointmentTime,providerId: doctorId}),
         credentials:"include"
-        
       });
       const payload = await res.json()
       if(!res.ok) {
-        const message = payload?.message || payload?.error || `Appointment failed (${res.status})`;
+        const message = payload?.message || payload?.error || `Appointment failed (${res?.status})`;
         console.error("Appointment error:", message);
         return
       }
       handleClickModal();
-     reset();
+      handleBookingSuccess()
+      reset();
     } catch (error) {
       console.error("Network / unexpected error:", error);
     }
-    // console.log(data);
-    
   };
   useEffect(() => {
     async function fetchingData() {

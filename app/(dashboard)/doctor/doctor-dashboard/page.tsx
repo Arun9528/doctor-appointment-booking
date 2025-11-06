@@ -78,7 +78,7 @@ export default function DoctorDashBoard() {
             </button>
           </div>
         </div>
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-4">
             <div className="size-12 relative rounded-full bg-gray-200 overflow-hidden  ">
               <Image
@@ -117,7 +117,7 @@ export default function DoctorDashBoard() {
             </div>
           </div>
           <p className="text-green-700 text-sm font-medium">Completed</p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -5,16 +5,18 @@ import Link from "next/link";
 
 interface sidebarSuggestionProps{
   specialty:string;
+  doctorId:string;
 }
-export default async function SidebarSuggestion({specialty}:sidebarSuggestionProps){
+export default async function SidebarSuggestion({specialty,doctorId}:sidebarSuggestionProps){
     try {
         const check = specialty === "general-physician" ? "General physician" : specialty.charAt(0).toUpperCase() + specialty.slice(1);
         const res = await fetch(`${BASE_URL}doctors?speciality=${check}`);
         const doctorCategory:doctorData[] = await res.json();
+        const filterdoctor = doctorCategory?.filter(doc => doc?._id !== doctorId)
         return (
         <aside className="shadow-xl rounded-xl p-5 border border-gray-200 space-y-3">
           <h3 className="font-bold text-lg">Suggestions</h3>
-          {doctorCategory?.map((suggestDoc) => (
+          {filterdoctor?.map((suggestDoc) => (
             <Link
               href={`/doctors/${specialty.replaceAll(" ","-")}/${suggestDoc?.name?.replaceAll(" ", "-")?.toLowerCase()}?id=${
                 suggestDoc?._id
