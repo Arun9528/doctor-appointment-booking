@@ -24,7 +24,7 @@ export default async function MyAppointments() {
     if (!res.ok) throw new Error(`fetching error ${res.status}`);
     const data = await res.json();
     const appointmentList: myAppointment[] = data?.appointments;
-    console.log(appointmentList);
+    // console.log(appointmentList);
     const formatDate = (cancelDate:string) =>{
        const date = new Date(cancelDate);
        const format = date?.toLocaleString("en-GB",{hour12:true,month:"short",year:"numeric",day:"2-digit",minute:"2-digit",hour:"2-digit"})
@@ -116,9 +116,20 @@ export default async function MyAppointments() {
                  <span >{appointment?.cancellation?.cancelledBy === "patient" ? "You"
                     : appointment?.cancellation?.cancelledBy}</span>
                 </p>
+                <p>
+                  <span className=" text-sm font-semibold text-black/70">Reason:</span>{" "}
+                  <span>
+                    {appointment?.cancellation?.reason}
+                  </span>
+                </p>
                 <p className="capitalize text-red-600 font-medium">{appointment?.status}</p>
               </div>
             )}
+            {
+              appointment.status === "confirmed" && (
+                 <button type="button" className="text-sky-600 font-medium text-sm">Appointment Confirmed By Doctor</button>
+              )
+            }
           </section>
         ))}
       </section>

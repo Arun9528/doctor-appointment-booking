@@ -1,11 +1,9 @@
 "use client";
-import { BASE_URL } from "@/base";
 import Inputs from "@/components/inputs";
 import Loginfetching from "@/utils/loginfetching";
 import { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 export interface loginForm {
   userId: string;
@@ -55,30 +53,6 @@ export default function LoginIn({
     try {
       let payload;
       if (headingName === "Login") {
-        // const res = await fetch(`${BASE_URL}users/login`, {
-        //   method: "POST",
-        //   headers: { "Content-Type": "application/json" },
-        //   credentials: "include",
-        //   body: JSON.stringify({
-        //     email: data?.userId,
-        //     password: data?.password,
-        //   }),
-        // });
-        // if (!res.ok) {
-        //   let errorMsg = "Login failed";
-        //   try {
-        //     const payload = await res?.json();
-        //     errorMsg = payload?.message || errorMsg;
-        //   } catch (parseErr) {
-        //     // If not JSON (e.g., HTML 404), use status text
-        //     errorMsg = res?.statusText || errorMsg;
-        //   }
-        //   alert(errorMsg);
-        //   return;
-        // }
-        // const payload = await res?.json();
-        // // console.log("Logged in:", payload?.user);
-        // const { name } = payload;
         payload = await Loginfetching("users/login",bodyData)
         if(!payload) return 
         
@@ -87,6 +61,7 @@ export default function LoginIn({
         route.push("/admin/admin-dashboard" as Route);
       } else if (headingName === "Doctor") {
         payload = await Loginfetching("doctors/login",bodyData)
+        console.log(payload)
         if(!payload) return 
         route.push("/doctor/doctor-dashboard" as Route);
       }

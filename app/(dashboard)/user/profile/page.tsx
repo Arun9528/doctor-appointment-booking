@@ -76,7 +76,7 @@ export default async function UserProfile() {
               </p>
               <p>
                 <span className="text-[#5e5e5e] font-medium">DOB : </span>{" "}
-                <span>{UserProfileData?.user?.dob.split("-").reverse().join("-")}</span>
+                <span>{UserProfileData?.user?.age} Year</span>
               </p>
             </div>
           </div>

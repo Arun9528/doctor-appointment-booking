@@ -8,6 +8,7 @@ import isSlotInPast from "@/utils/isSlotInPast";
 import { useEffect, useState } from "react";
 import { doctorData } from "@/lib/types";
 import { BASE_URL } from "@/base";
+import Submit_Cancel_Form_Btn from "../submit_cancel_form_btn";
 interface AppointmentForm {
   appointmentDate: Date;
   appointmentTime: string;
@@ -28,7 +29,7 @@ export default function AppointmentRegister({
     // register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors,isSubmitting },
     control,
     watch,
   } = useForm<AppointmentForm>({
@@ -186,7 +187,7 @@ export default function AppointmentRegister({
           className="w-full border border-gray-300 rounded-lg shadow-md p-3 outline-none focus:border-sky-600"
           placeholder="Note (optional)"
         ></textarea> */}
-        <div className="flex items-center justify-end gap-x-3">
+        {/* <div className="flex items-center justify-end gap-x-3">
           <button
             type="button"
             onClick={handleClickModal}
@@ -200,7 +201,8 @@ export default function AppointmentRegister({
           >
             Submit
           </button>
-        </div>
+        </div> */}
+        <Submit_Cancel_Form_Btn handleClickModal={handleClickModal} isSubmitting={isSubmitting}/>
       </form>
     </section>
   );

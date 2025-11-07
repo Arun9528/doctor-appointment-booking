@@ -11,8 +11,9 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { loginForm } from "./Auth/loginIn";
 import { signUpForm } from "./Auth/userSignUp";
 import { AddDocForm } from "./adding_Doctor";
-import { ProfileProps } from "./doctor_Profile";
+import { ProfileProps } from "./doctor/doctor_Profile";
 import { userRegistrationForm } from "./Auth/user_registration_page";
+import { doctorCancelForm } from "./doctor/doctor_cancel_modal";
 
 interface InputsProps<
   T extends
@@ -21,6 +22,7 @@ interface InputsProps<
     | AddDocForm
     | ProfileProps
     | userRegistrationForm
+    | doctorCancelForm
 > {
   inputType: string;
   label: string;
@@ -43,6 +45,7 @@ export default function Inputs<
     | AddDocForm
     | ProfileProps
     | userRegistrationForm
+    | doctorCancelForm
 >({
   inputType,
   label,
@@ -82,7 +85,7 @@ export default function Inputs<
         id={`${label}-${inputType}`}
         {...register(name, validation)}
         placeholder={placeholder}
-        className={`w-full py-2 px-3 border outline-0 rounded-md text-black/70 
+        className={`w-full py-2 px-3 border outline-0 rounded-md  
         ${error ? "border-red-500" : "border-gray-300"}
         ${disabled ? "bg-gray-300 cursor-not-allowed text-gray-500" : ""}
         `}

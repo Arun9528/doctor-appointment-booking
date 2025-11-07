@@ -2,8 +2,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AddDocForm } from "./adding_Doctor";
-import Inputs from "./inputs";
+import { AddDocForm } from "../adding_Doctor";
+import Inputs from "../inputs";
 import { typeDoctor } from "@/app/(explore)/page";
 export type ProfileProps = Omit<AddDocForm, "password">;
 export default function Doctor_Profile() {

@@ -34,7 +34,7 @@ export interface UserData{
   phone_no:string;
   address:string;
   gender:"Male" | "Female";
-  dob:string;
+  age:string;
 }
 export interface miniDoctorData{
    
@@ -55,8 +55,39 @@ export interface myAppointment{
   timeSlot:string;
   providerId:miniDoctorData
  _id:string;
-  status:"pending" | "cancelled"
+  status:"pending" | "cancelled" | "confirmed" ;
   cancellation:cancellationProp
   createdAt:string;
-
+}
+interface doctorAppointmentdata{
+  _id:string;
+  date:string;
+  providerId:{_id:string,appointmentFee:number}
+  status:"pending" | "cancelled" | "confirmed" | "completed";
+  timeSlot:string;
+  userId:{
+    _id:string;
+    name:string;
+    profile_photo:string;
+    age:string;
+  },
+  cancellation:cancellationProp
+  payment:{
+    status:"Unpaid" | "Paid",
+    amount: number
+  }
+}
+interface dataofdoctorAppointment{
+  appointments:doctorAppointmentdata[]
+  summary:{
+    iGaveYouEverything:boolean;
+    requested:number;
+    totalInDatabase:number;
+    youGot:number
+  }
+}
+export interface doctorAppointment{
+  data:dataofdoctorAppointment,
+  message:string;
+  success:boolean
 }

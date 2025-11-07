@@ -11,8 +11,8 @@ import { UserData } from "@/lib/types";
 export interface userRegistrationForm {
   name: string;
   email: string;
-  phone_no: string;
-  dob: string;
+  phone_no: string ;
+  age: string;
   gender: "Male" | "Female" | null;
   address: string;
   profile_photo: FileList | string | undefined;
@@ -38,14 +38,14 @@ export default function User_Registration_Page({
       name: userReg?.name,
       email: userReg?.email,
       phone_no: userData?.phone_no || "",
-      dob: userData?.dob || "",
+      age: userData?.age || "",
       gender: userData?.gender || null,
       address: userData?.address || "",
       profile_photo:  undefined,
     },
     mode: "onChange",
   });
-  const today = new Date().toISOString().split("T")[0];
+  // const today = new Date().toISOString().split("T")[0];
   const onSubmit: SubmitHandler<userRegistrationForm> = async(data) => {
     if (!userReg?._id) {
       console.log("id not found");
@@ -59,7 +59,7 @@ export default function User_Registration_Page({
     }
     if (isEdit && data?.email) formData?.append("email",data?.email)
     if (data?.phone_no) formData?.append("phone_no", data?.phone_no);
-    if (data?.dob) formData?.append("dob", data?.dob);
+    if (data?.age) formData?.append("age", data?.age);
     if (data?.gender) formData?.append("gender", data?.gender);
     if (data?.address) formData?.append("address", data?.address);
     if (data?.profile_photo && data?.profile_photo[0]) {
@@ -135,14 +135,13 @@ export default function User_Registration_Page({
           error={errors?.phone_no}
         />
         <Inputs
-          inputType="date"
-          label="Date of Birth"
-          name="dob"
+          inputType="number"
+          label="Age"
+          name="age"
           register={register}
-          validation={{ required: "DOB is Required",validate:(val)=> val && val <= today || "DOB cannot be in the future" }}
-          placeholder="Enter your DOB."
-          error={errors?.dob}
-          max={today}
+          validation={{ required: "Age is Required" }}
+          placeholder="Enter your Age."
+          error={errors?.age}
         />
         <div>
           <h2 className="text-[#5e5e5e] font-medium">
