@@ -45,6 +45,24 @@ table td,table th{
   padding: 14px 0;
 }
 
+/* doctor profile page */
+.doctor-details-heading{
+  /* color: #5e5e5e; */
+  color: black;
+  font-weight: 500;
+  font-size: 15px;
+}
+.doctor-details-title{
+  font-weight: 500;
+  font-size :13px;
+  color: rgba(0, 0, 0, .9);
+}
+
+.label-title{
+  color: #5e5e5e;;
+  font-weight: 500;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

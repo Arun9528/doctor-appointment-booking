@@ -35,12 +35,12 @@ export default function LoginIn({
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors ,isSubmitting},
     reset,
   } = useForm<loginForm>({
     defaultValues: {
-      userId: "gp_001@example.com",
-      password: "1",
+      userId: "admin@gmail.com",
+      password: "admin12345",
     },
     mode: "onChange",
   });
@@ -55,9 +55,11 @@ export default function LoginIn({
       if (headingName === "Login") {
         payload = await Loginfetching("users/login",bodyData)
         if(!payload) return 
-        
         route.push("/" as Route);
       } else if (headingName === "Admin") {
+        payload = await Loginfetching("admin/login",bodyData)
+        console.log(payload,"admin")
+        if(!payload) return 
         route.push("/admin/admin-dashboard" as Route);
       } else if (headingName === "Doctor") {
         payload = await Loginfetching("doctors/login",bodyData)
@@ -109,7 +111,7 @@ export default function LoginIn({
           type="submit"
           className="w-full rounded-lg bg-[#5f6fff] text-white py-2 cursor-pointer font-medium mt-2"
         >
-          Login
+          {isSubmitting ? "Submiting..." : "Login"}
         </button>
       </form>
       <p className="text-sm text-[#5e5e5e]">

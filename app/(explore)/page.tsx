@@ -2,6 +2,7 @@ import TopDoctorList from "@/components/topdoctorList";
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
+import styles from "@/components/compoents_style_css/home.module.css"
 
 export const typeDoctor = [
   "General physician",
@@ -16,7 +17,7 @@ export default function Home() {
     <main className="px-20 py-5">
       <section className="bg-[#5f6fff] min-h-[calc(100vh-10rem)] grid grid-cols-2 text-white rounded-lg px-5">
         <div className="self-center space-y-5 px-20">
-          <h1 className="text-[50px] font-bold leading-14">
+          <h1 className={styles.header_text}>
             Book Appointment With Trusted Doctors
           </h1>
           <div className="flex items-center gap-x-4">
@@ -44,9 +45,9 @@ export default function Home() {
         <Image
           src={"/doc-header-img.png"}
           alt="group-of-doctors"
-          className="justify-self-end self-end"
-          width={700}
-          height={500}
+          className="justify-self-end self-end  "
+          width={800}
+          height={800}
           priority
         />
       </section>

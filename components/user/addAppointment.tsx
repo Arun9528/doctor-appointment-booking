@@ -82,9 +82,9 @@ export default function AddAppointment({ doctorId }: { doctorId: string }) {
     setShowModal(false)
   }
   return (
-    <div>
+    <div className="">
       {isExits?.alreadyRequested && (
-        <p className="text-black/70 text-sm text-center mb-2">
+        <p className="text-black/70 dark:text-white/90 text-sm text-center mb-2">
           <span>
             {isExits?.date.split("T")[0]?.split("-")?.reverse()?.join("-")}
           </span>{" "}

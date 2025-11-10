@@ -44,8 +44,9 @@ export default function UserSignUp(){
       }
       console.log("Signup success:", result);
       // setUser(result?.user)
-      reset();
+     
       route?.replace ("/user/registration" as Route);
+       reset();
     } catch (error) {
       console?.error("Network error:", error);
       alert("Something went wrong. Check console.");

@@ -110,7 +110,7 @@ export default function AppointmentRegister({
                       return date < now;
                     }}
                     defaultMonth={field?.value ?? now}
-                    className="rounded-lg border border-gray-300 w-72 h-full shadow-md px-3 pb-7 "
+                    className="rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-900 w-72 h-full shadow-md px-3 pb-7 "
                   />
                   {errors?.appointmentDate && (
                     <p className=" absolute top-full text-xs text-red-600 font-medium">
@@ -138,7 +138,7 @@ export default function AppointmentRegister({
                      ${
                        errors?.appointmentTime
                          ? "border-red-600"
-                         : "border-gray-300"
+                         : "border-gray-300 dark:border-gray-700"
                      } h-full `}
                 >
                   {timeSlots?.map((slots, i) => {
@@ -155,10 +155,10 @@ export default function AppointmentRegister({
                         }}
                         className={`${
                           disabled
-                            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                            ? "bg-gray-200 dark:bg-gray-500 text-gray-400 cursor-not-allowed"
                             : isSelected
                             ? "bg-sky-600 text-white"
-                            : "hover:bg-sky-500 hover:text-white hover:border-sky-500 cursor-pointer border border-gray-300"
+                            : "hover:bg-sky-500 hover:text-white hover:border-sky-500 cursor-pointer border border-gray-300 dark:border-gray-700"
                         }
                          rounded-2xl py-1 px-3.5  transition-colors duration-300 ease-in-out text-sm`}
                         disabled={disabled}

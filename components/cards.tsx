@@ -11,8 +11,8 @@ export default async function Cards({
   showAvaiable = false,
 }: CardsProps) {
   return (
-    <div className=" border border-[#C9D8FF] w-60 h-[350px] rounded-lg overflow-hidden flex flex-col transform_animation">
-      <div className="bg-[#EAEFFF] h-60 relative overflow-hidden">
+    <div className=" border border-[#C9D8FF] dark:border-gray-800 shadow-md w-60 h-[350px] rounded-lg overflow-hidden flex flex-col transform_animation">
+      <div className="bg-[#EAEFFF] dark:bg-transparent h-60 relative overflow-hidden">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200px] h-[200px]">
           <Image
             src={`${IMAGE_URL}${data?.profile_photo}`}
@@ -25,14 +25,16 @@ export default async function Cards({
         </div>
       </div>
       <div className=" px-3 flex-1 flex flex-col justify-center gap-y-1.5 py-3">
-        <p className="text-[10px] text-sky-500 font-medium bg-[#CFE4F7] px-3 py-1 w-fit rounded-4xl">
+        <p className="text-[10px] text-sky-500  font-medium bg-[#CFE4F7] dark:bg-transparent dark:border dark:border-gray-800 px-3 py-1 w-fit rounded-4xl">
           {data?.category?.name}
         </p>
         {/* <div className="flex  items-center gap-x-2">
                  <p className="size-2 rounded-full bg-green-500"></p>
                  <p className="text-xs font-medium text-green-400">Available</p>
               </div> */}
-        <p className="font-semibold text-lg text-[#1F2937]">{data?.name}</p>
+        <p className="font-semibold text-lg text-[#1F2937] dark:text-white/85">
+          {data?.name}
+        </p>
         {showAvaiable ? (
           <div className="flex items-center justify-center gap-x-1">
             <input

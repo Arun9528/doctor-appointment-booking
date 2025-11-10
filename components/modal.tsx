@@ -30,7 +30,7 @@ export default function Modal({ children,handleClickModal,sectionStyle = ""}: Mo
           type: "spring",
           stiffness: 300,
         }}
-        className={`${sectionStyle ? sectionStyle : "w-3xl"} h-auto bg-white rounded-lg p-4 `}
+        className={`${sectionStyle ? sectionStyle : "w-3xl"} h-auto bg-white dark:bg-gray-900 rounded-lg p-4 `}
       >
         {children}
       </motion.section>

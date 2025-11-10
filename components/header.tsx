@@ -8,6 +8,7 @@ import { RiArrowUpSLine } from "react-icons/ri";
 import { AnimatePresence, motion } from "motion/react";
 import { BASE_URL, IMAGE_URL } from "@/base";
 import { cookiesProps } from "@/utils/auth";
+import DarkModeBtn from "./darkmodebtn";
 interface SidebarLinksValue {
   label: string;
   href: Route;
@@ -63,8 +64,8 @@ export default function Header({ userCookie }: headerProps) {
   };
   // console.log(IMAGE_URL+cookieData?.photo)
   return (
-    <header className="border-b border-gray-300 shadow-sm py-3 px-20 flex justify-between items-center ">
-      <Link href={"/"} className="text-xl font-bold text-black/80">
+    <header className="border-b  border-gray-300 dark:border-gray-700 shadow-sm py-3 px-20 flex justify-between items-center ">
+      <Link href={"/"} className="text-xl font-bold text-black/80 dark:text-white/90">
         Compnay Name/Logo
       </Link>
       <nav className=" font-medium text-base flex items-center gap-x-8 ">
@@ -79,14 +80,14 @@ export default function Header({ userCookie }: headerProps) {
                 href={href}
                 className={`${
                   conditionLink
-                    ? "text-[#3245f3] font-semibold"
-                    : "group-hover:text-[#3245f3] "
+                    ? "text-[#3245f3]  font-semibold"
+                    : "group-hover:text-[#3245f3] dark:group-hover:text-white/90"
                 } `}
               >
                 {label}
               </Link>
               <span
-                className={`absolute left-0 bottom-0 h-0.5 w-0 bg-[#3245f3] transition-all duration-300 ${
+                className={`absolute left-0 bottom-0 h-0.5 w-0 bg-[#3245f3] transition-all duration-300 ease-in-out ${
                   conditionLink ? "" : "group-hover:w-full"
                 }`}
               ></span>
@@ -95,12 +96,14 @@ export default function Header({ userCookie }: headerProps) {
         })}
         <Link
           href={"/admin-login" as Route}
-          className="px-5 py-1.5 text-xs border border-gray-300 rounded-4xl text-black/80 hover:bg-sky-600 hover:text-white hover:border-sky-500 "
+          className="px-5 py-1.5 text-xs border border-gray-300 rounded-4xl text-black/80 hover:bg-sky-600 hover:text-white/90 hover:border-sky-500 dark:border-gray-100/40 dark:text-white "
         >
           Admin Panel
         </Link>
       </nav>
-      {cookieData ? (
+       <div className="flex items-center gap-x-4">
+        <DarkModeBtn/>
+        {cookieData ? (
         <div
           ref={containerRef}
           className="cursor-pointer flex items-center gap-x-1.5 relative"
@@ -121,8 +124,7 @@ export default function Header({ userCookie }: headerProps) {
               height={100}
               unoptimized
               loading="eager"
-              priority
-              style={{ objectFit: "cover"}}
+              style={{ objectFit: "cover",width:"100%",height:"100%"}}
             />
           </button>
           <motion.button
@@ -143,27 +145,27 @@ export default function Header({ userCookie }: headerProps) {
                 animate={{ height: "auto" }}
                 exit={{ height: 0 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="z-50 absolute top-12 -right-1 flex flex-col w-max bg-gray-100 rounded-lg px-2 py-2 gap-.5 shadow-2xl overflow-hidden "
+                className="z-50 absolute top-12 -right-1 flex flex-col w-max bg-gray-100 dark:bg-gray-800 rounded-lg px-2 py-2 gap-.5 shadow-2xl overflow-hidden "
               >
-                <p className="text-center font-medium text-sm pt-3 pb-1 ">
+                <p className="text-center font-medium text-sm pt-3 pb-1 capitalize ">
                   {cookieData?.name}
                 </p>
-                <hr className="border-2 border-black/10" />
+                <hr className="border-2 border-black/10 dark:border-gray-700" />
                 <Link
                   href={"/user/profile" as Route}
-                  className="hover:bg-gray-200 rounded-md px-4 py-1 mt-2"
+                  className="hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md px-4 py-1 mt-2"
                 >
                   Profile
                 </Link>
                 <Link
                   href={"/user/my-appointments" as Route}
-                  className="hover:bg-gray-200 rounded-md px-4 py-1"
+                  className="hover:bg-gray-200  dark:hover:bg-gray-700  rounded-md px-4 py-1"
                 >
                   My Appointments
                 </Link>
                 <button
                   type="button"
-                  className="hover:bg-gray-200 rounded-md px-4 py-1 text-start"
+                  className="hover:bg-gray-200  dark:hover:bg-gray-700  rounded-md px-4 py-1 text-start cursor-pointer"
                   onClick={handleNavigation}
                 >
                   Logout
@@ -180,6 +182,7 @@ export default function Header({ userCookie }: headerProps) {
           Login / SignUp
         </Link>
       )}
+       </div>
     </header>
   );
 }

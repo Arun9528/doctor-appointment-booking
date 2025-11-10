@@ -1,5 +1,5 @@
 import { BASE_URL, IMAGE_URL } from "@/base";
-import EditUserProfile from "@/components/user/edituserProfile";
+import EditUserProfile from "@/components/editProfile";
 import { UserData } from "@/lib/types";
 import CheckingAuth from "@/utils/checkingAuth";
 import { Metadata, Route } from "next";
@@ -36,7 +36,7 @@ export default async function UserProfile() {
     const UserProfileData: { user: UserData } = await res.json();
     return (
       <section className="px-20 flex flex-col items-center pt-10 gap-3 relative">
-      <EditUserProfile userData={userAuth}  userProfileData={UserProfileData?.user}/>
+      <EditUserProfile authData={userAuth}  ProfileData={UserProfileData?.user} isUserProfile={true}/>
         <Image
           src={userAuth?.photo ? `${IMAGE_URL}${userAuth.photo}` : "/dog.png"}
           alt="User Profile Photo"
@@ -75,7 +75,7 @@ export default async function UserProfile() {
                 <span>{UserProfileData?.user?.gender}</span>
               </p>
               <p>
-                <span className="text-[#5e5e5e] font-medium">DOB : </span>{" "}
+                <span className="text-[#5e5e5e] font-medium">Age : </span>{" "}
                 <span>{UserProfileData?.user?.age} Year</span>
               </p>
             </div>

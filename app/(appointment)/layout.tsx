@@ -15,15 +15,12 @@ const geistOutfit = Outfit({
 };
 
 export default async function AppointMentLayout(props:LayoutProps<"/">){
-  //  const cookieStore = await cookies();
-  //   const cookieHeader = cookieStore?.getAll()?.map((c) => `${c?.name}=${c?.value}`)?.join("; ");
-  //   const user = await FetchingCookies(cookieHeader)
   const userAuthDoctorAppointment = await CheckingAuth();
     return (
         <html lang="en">
               <body
                 // className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-                className={`antialiased min-h-screen ${geistOutfit}`}
+                className={`antialiased min-h-screen ${geistOutfit} dark:bg-gray-900 dark:text-white/90`}
               >
                 <Header userCookie={userAuthDoctorAppointment}/>
                 {props?.children}

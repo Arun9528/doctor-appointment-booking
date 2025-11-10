@@ -2,10 +2,11 @@
 interface FormbtnProp{
     handleClickModal:()=>void
     isSubmitting:boolean
+    divStyle?:string;
 }
-export default function Submit_Cancel_Form_Btn({handleClickModal,isSubmitting}:FormbtnProp){
+export default function Submit_Cancel_Form_Btn({handleClickModal,isSubmitting,divStyle= ""}:FormbtnProp){
     return (
-        <div className="flex items-center justify-end gap-x-3">
+        <div className={`flex items-center  gap-x-3 ${divStyle ? divStyle : "justify-end"}`}>
           <button
             type="button"
             onClick={handleClickModal}

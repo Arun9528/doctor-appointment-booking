@@ -1,6 +1,5 @@
 import DashBoardHeader from "@/components/dashboardHeader";
 import DashBoardSidebar from "@/components/dashboardSidebar";
-import Header from "@/components/header";
 
 export default function AdminDashBaordLayout({children}:Readonly<{children:React.ReactNode}>){
     return (

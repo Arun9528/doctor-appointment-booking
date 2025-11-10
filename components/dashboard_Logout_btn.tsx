@@ -3,18 +3,22 @@ import { BASE_URL } from "@/base";
 import { Route } from "next";
 import { useRouter } from "next/navigation";
 
-export default function DashBoardLogoutBtn() {
+export default function DashBoardLogoutBtn({dashboardTitle}:{dashboardTitle:string}) {
   const route = useRouter();
   const handleClick = async () => {
     try {
-      await fetch(`${BASE_URL}users/logout`, {
+      await fetch(`${BASE_URL}${dashboardTitle}/logout`, {
         method: "POST",
         credentials: "include",
       });
     } catch (err) {
       console.error("Logout failed:", err);
     } finally {
-      route.replace("/doctor-login" as Route);
+      if(dashboardTitle === "admin"){
+        route.replace("/admin-login" as Route)
+      }else{
+           route.replace("/doctor-login" as Route);
+      }
     }
   };
   return (

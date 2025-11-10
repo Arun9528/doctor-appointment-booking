@@ -37,7 +37,7 @@ export default async function AppointmentLayout({
     <html lang="en">
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-        className={`antialiased min-h-screen ${geistOutfit}`}
+        className={`antialiased min-h-screen ${geistOutfit} dark:bg-gray-900`}
       >
         <Header userCookie={Auth} />
         {children}

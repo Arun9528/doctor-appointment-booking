@@ -21,7 +21,7 @@ export default async function DocAppointment(props: PageProps<"/doctors/[special
         <h1 className="text-2xl font-bold ">Details</h1>
         <section className="grid grid-cols-[75%_23%] gap-x-7">
           <section className="space-y-6">
-            <div className="border border-gray-200 rounded-lg flex items-center justify-between shadow-lg p-5">
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg flex items-center justify-between shadow-lg p-5">
               <div className="flex items-center gap-x-10">
                 <div className="bg-gray-200/70 rounded-lg">
                   <Image
@@ -61,7 +61,7 @@ export default async function DocAppointment(props: PageProps<"/doctors/[special
 
               <AddAppointment doctorId={getId?.id as string} />
             </div>
-            <div className="border border-gray-200 rounded-lg p-5 shadow-lg space-y-2">
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-5 shadow-lg space-y-2">
               <h2 className="text-xl font-bold ">About Me</h2>
               <p className="text-[#5e5e5e] text-sm">
                 {doctorDetails?.about} Lorem ipsum dolor sit amet consectetur

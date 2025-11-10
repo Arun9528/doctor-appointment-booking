@@ -36,6 +36,7 @@ export default async function DoctorAppointment() {
               <th className="w-20">Age</th>
               <th>Date & Time</th>
               <th className="w-20">Fees</th>
+              <th className="w-20">CancelledBy</th>
               <th>Remark</th>
               <th>Status</th>
               <th className="w-52">Action</th>
@@ -66,6 +67,7 @@ export default async function DoctorAppointment() {
                 <td>{patient?.userId?.age}</td>
                 <td>{new Date(patient?.date)?.toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric"})} & {patient?.timeSlot}</td>
                 <td>&#8377; {patient?.providerId?.appointmentFee}</td>
+                <td>{patient?.cancellation?.cancelledBy === "doctor" ? "You" : patient?.cancellation?.cancelledBy}</td>
                 <td>{patient?.cancellation?.remarkToPatient || ""}</td>
                 <td className={`capitalize font-medium`}>{patient?.status}</td>
                 {/* <td className="text-red-600 font-medium">Cancelled</td> */}

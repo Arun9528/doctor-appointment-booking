@@ -28,6 +28,7 @@ export interface doctorData {
   patients_appointments: PatientAppointment[];
   address:string;
   clinic_address:string;
+  isAvailable:boolean
 }
 
 export interface UserData{
@@ -62,7 +63,7 @@ export interface myAppointment{
 interface doctorAppointmentdata{
   _id:string;
   date:string;
-  providerId:{_id:string,appointmentFee:number}
+  providerId:{_id:string,appointmentFee:number,profile_photo:string,name:string,age:number}
   status:"pending" | "cancelled" | "confirmed" | "completed";
   timeSlot:string;
   userId:{
@@ -82,12 +83,42 @@ interface dataofdoctorAppointment{
   summary:{
     iGaveYouEverything:boolean;
     requested:number;
+    totalRevenue:number
     totalInDatabase:number;
     youGot:number
+    totalAppointment:number
+    totalPatient:number
   }
 }
 export interface doctorAppointment{
   data:dataofdoctorAppointment,
   message:string;
   success:boolean
+}
+
+// admin DashBoard
+
+export interface AdminDashboard{
+  summary:{
+    totalAppointments:number;
+    totalDoctors:number;
+    totalPatients:number
+  }
+  latestAppointments:doctorAppointmentdata[]
+}
+
+// Admin All Doctor Appointment Page
+
+export interface Admin_All_Appointment{
+  appointments:doctorAppointmentdata[];
+  pagination:{
+    hasNextPage:boolean;
+    hasPrevPage:boolean;
+    page:number;
+    perPage:number;
+    showingFrom:number;
+    showingTo:number;
+    totalAppointments:number;
+    totalPage:number
+  }
 }

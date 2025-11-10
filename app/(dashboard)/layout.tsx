@@ -8,7 +8,7 @@ import "@/app/globals.css"
 export default async function DashboardLayout({children}:Readonly<{children:React.ReactNode}>){
     return (
            <html lang="en">
-             <body className={`antialiased min-h-screen ${geistOutfit}`}>
+             <body className={`antialiased min-h-screen ${geistOutfit} dark:bg-gray-900`}>
                 {children}
              </body>
            </html>

@@ -37,7 +37,7 @@ export default async function DoctorDashBoard() {
             <div className="flex items-center gap-x-4">
               <FaUserDoctor className="text-4xl" />
               <div>
-                <p className="font-semibold text-xl text-[#5e5e5e]">$1000</p>
+                <p className="font-semibold text-xl text-[#5e5e5e]">{Appointmentdata?.summary?.totalRevenue}</p>
                 <p className="text-gray-600">Earnings</p>
               </div>
             </div>
@@ -47,7 +47,7 @@ export default async function DoctorDashBoard() {
               <MdOutlineContentPasteSearch className="text-[40px]" />
               <div>
                 <p className="font-semibold text-xl text-[#5e5e5e]">
-                  {Appointmentdata?.summary?.totalInDatabase}
+                  {Appointmentdata?.summary?.totalAppointment}
                 </p>
                 <p className="text-gray-600">Appointments</p>
               </div>
@@ -58,7 +58,7 @@ export default async function DoctorDashBoard() {
               <FaUser className="text-4xl " />
               <div>
                 <p className="font-semibold text-xl text-[#5e5e5e]">
-                  {Appointmentdata?.summary?.totalInDatabase}
+                  {Appointmentdata?.summary?.totalPatient}
                 </p>
                 <p className="text-gray-600">Patients</p>
               </div>
@@ -81,7 +81,7 @@ export default async function DoctorDashBoard() {
                     alt="doctor Photo"
                     width={50}
                     height={50}
-                    className="bg-center w-auto h-auto "
+                    className="bg-center w-full h-full object-cover "
                     unoptimized
                   />
                 </div>
