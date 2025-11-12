@@ -15,7 +15,8 @@ interface DoctorProfileProps {
   doctorData: doctorData;
   handleClickModal: () => void;
 }
-export type doctorForm = Omit<doctorData,"category" | "patients_appointments"> & { category: string };
+export type doctorForm = Omit<doctorData,"category" | "patients_appointments" | "education"> &
+ { category: string,education:{name:string}[] };
 export default function Doctor_Profile({
   doctorData,
   handleClickModal,
@@ -45,7 +46,7 @@ export default function Doctor_Profile({
     },
     mode: "onChange",
   });
-  const { fields, append, remove } = useFieldArray<doctorForm,"education">({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "education",
   });
@@ -65,7 +66,7 @@ export default function Doctor_Profile({
        if(data?.clinic_address) formData.append("clinic_address",data?.clinic_address);
        if(data?.isAvailable) formData.append("isAvailable",String(data?.isAvailable));
        if(data?.education && data?.education?.length > 0){
-          data?.education?.forEach(edu => formData.append("education",edu))
+          data?.education?.forEach(edu => formData.append("education",edu?.name))
        }
        if(data?.profile_photo && data.profile_photo[0]){
         formData.append("profile_photo", data.profile_photo[0]);
@@ -95,7 +96,7 @@ export default function Doctor_Profile({
     }
   };
   useEffect(() => {
-    if (doctorData && getCategory.length > 0) {
+    if (doctorData && getCategory?.length > 0) {
       reset({ category: doctorData?.category?._id });
     }
   }, [getCategory]);
@@ -276,7 +277,7 @@ export default function Doctor_Profile({
           </div>
           <button
             type="button"
-            onClick={() => append("")}
+            onClick={() => append({name:""})}
             className="text-blue-500 text-sm mt-1 cursor-pointer"
           >
             + Add another degree

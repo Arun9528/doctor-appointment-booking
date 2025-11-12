@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Doctor Profile",
   description: "Thsi Page Show doctor Profile",
 };
+export type ModifyDoctorData = Omit<doctorData,"education"> & {education:string[]}
 export default async function DoctorProfile() {
   try {
     const doctorAuth = await CheckingAuth();
@@ -23,7 +24,7 @@ export default async function DoctorProfile() {
       cache: "no-store",
     });
     if (!res.ok) throw new Error(`fetching error ${res?.status}`);
-    const doctorDetails: doctorData = await res.json();
+    const doctorDetails:ModifyDoctorData = await res.json();
     return (
       <section className="p-5 space-y-4">
         <EditProfile authData={doctorAuth}  ProfileData={doctorDetails} isUserProfile={false}/>

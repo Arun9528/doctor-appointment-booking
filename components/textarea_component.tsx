@@ -8,8 +8,9 @@ import {
 } from "react-hook-form";
 import { doctorCancelForm } from "./doctor/doctor_cancel_modal";
 import { doctorForm } from "./doctor/doctor_Profile";
+import { newDoctorForm } from "./adding_Doctor";
 
-interface textAreaProps<T extends doctorCancelForm | doctorForm> {
+interface textAreaProps<T extends doctorCancelForm | doctorForm | newDoctorForm> {
   label: string;
   name: Path<T>;
   register: UseFormRegister<T>;
@@ -18,7 +19,7 @@ interface textAreaProps<T extends doctorCancelForm | doctorForm> {
   placeholder: string;
   divStyle?:string;
 }
-export default function TextArea_Component<T extends doctorCancelForm | doctorForm>({
+export default function TextArea_Component<T extends doctorCancelForm | doctorForm | newDoctorForm>({
   label,
   register,
   validation,
@@ -35,7 +36,8 @@ export default function TextArea_Component<T extends doctorCancelForm | doctorFo
         {...register(name, validation)}
         id={label}
         rows={4}
-        className="w-full border border-gray-300 rounded-lg shadow-md p-3 outline-none focus:border-sky-600 text-sm"
+        className={`w-full border  rounded-lg shadow-md p-3 outline-none  text-sm
+          ${error ? "border-red-500" : "border-gray-300"}`}
         placeholder={placeholder}
       ></textarea>
       {error && (

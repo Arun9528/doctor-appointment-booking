@@ -10,7 +10,7 @@ export default function Modal({ children,handleClickModal,sectionStyle = ""}: Mo
     <section>
       
       <motion.div
-      className="fixed inset-0 bg-black/80 center_content min-h-screen "
+      className="fixed inset-0 bg-black/80 center_content min-h-screen z-50 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

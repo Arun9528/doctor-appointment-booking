@@ -13,15 +13,16 @@ export interface PatientAppointment {
 export interface doctorData {
   _id: string;
   name: string;
-  gender: "Male" | "Female" | "Other";
+  gender: "Male" | "Female";
   email: string;
   password: string;
-  age: number;
+  age: number | null;
   education: string[];
-  experienceYears: number;
+  // education:{name:string}[]
+  experienceYears: number | null;
   about: string;
-  appointmentFee: number;
-  currency: string;
+  appointmentFee: number | null;
+  // currency: string;
   category: {_id:string,name:string;}
   profile_photo: string;
   booking_time_Slots: string[];

@@ -10,19 +10,19 @@ import {
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { loginForm } from "./Auth/loginIn";
 import { signUpForm } from "./Auth/userSignUp";
-import { AddDocForm } from "./adding_Doctor";
 import { doctorForm } from "./doctor/doctor_Profile";
 import { userRegistrationForm } from "./Auth/user_registration_page";
 import { doctorCancelForm } from "./doctor/doctor_cancel_modal";
+import { newDoctorForm } from "./adding_Doctor";
 
 interface InputsProps<
   T extends
     | loginForm
     | signUpForm
-    | AddDocForm
     | userRegistrationForm
     | doctorCancelForm
     | doctorForm
+    | newDoctorForm
 > {
   inputType: string;
   label: string;
@@ -42,10 +42,10 @@ export default function Inputs<
   T extends
     | loginForm
     | signUpForm
-    | AddDocForm
     | userRegistrationForm
     | doctorCancelForm
     | doctorForm
+    | newDoctorForm
 >({
   inputType,
   label,
