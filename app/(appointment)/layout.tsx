@@ -2,12 +2,9 @@ import Header from "@/components/header"
 import { Metadata } from "next";
 import { Outfit } from "next/font/google"
 import "@/app/globals.css"
-import { cookies } from "next/headers";
-import FetchingCookies from "@/utils/auth";
 import CheckingAuth from "@/utils/checkingAuth";
 const geistOutfit = Outfit({
   subsets:["latin"],
-  // variable:'--font-outfit'
  })
  export const metadata: Metadata = {
   title: "Doctor Appointment",
@@ -19,7 +16,6 @@ export default async function AppointMentLayout(props:LayoutProps<"/">){
     return (
         <html lang="en">
               <body
-                // className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
                 className={`antialiased min-h-screen ${geistOutfit} dark:bg-gray-900 dark:text-white/90`}
               >
                 <Header userCookie={userAuthDoctorAppointment}/>

@@ -38,8 +38,17 @@ body {
   font-size: 14px;
   text-underline-offset: 2px;
 }
+.dark .footer-text{
+  color:  rgb(255 255 255 / 0.8);
+}
 .footer-text:hover{
    text-decoration-line: underline;
+}
+
+@media screen  and (max-width:640px)  {
+  .footer-text{
+  font-size: 12px;
+}
 }
 table td,table th{
   padding: 14px 0;
@@ -52,15 +61,68 @@ table td,table th{
   font-weight: 500;
   font-size: 15px;
 }
+.dark .doctor-details-heading{
+  color:white
+}
 .doctor-details-title{
   font-weight: 500;
   font-size :13px;
   color: rgba(0, 0, 0, .9);
 }
+.dark .doctor-details-title{
+  color: rgba(255,255,255,0.8);
+}
 
 .label-title{
   color: #5e5e5e;;
   font-weight: 500;
+}
+.dark .label-title{
+  color: rgb(255 255 255 / 0.8);
+}
+
+/* responsive padding for every page */
+
+.responsive_left-right_padding{
+   padding: 0.75rem 0.75rem;
+}
+@media screen and (min-width:640px) and (max-width:768px) {
+    .responsive_left-right_padding{
+        padding: 0.75rem 1.25rem
+    }
+}
+@media screen and (min-width:768px) and (max-width:1024px) {
+    .responsive_left-right_padding{
+        padding: 0.75rem 2.5rem
+    }
+}
+@media screen and (min-width:1024px) {
+    .responsive_left-right_padding{
+        padding: 0.75rem 5rem
+    }
+}
+html.dark,
+.dark {
+  --sb-track: #1d1d1d;
+  --sb-thumb: #d1d1d1;
+}
+html:not(.dark) {
+  --sb-track: #c1c6ce;
+  --sb-thumb: #edf0f5;
+}
+
+.my-scroll::-webkit-scrollbar {
+
+  height: 6px;
+}
+.my-scroll::-webkit-scrollbar-track {
+  background: var(--sb-track);
+  border-radius: 100vw;
+}
+.my-scroll::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb);
+  border: 2px solid var(--sb-track);
+  border-radius: 100vw;
 }
 
 @theme inline {

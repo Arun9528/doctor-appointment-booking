@@ -5,6 +5,7 @@ import { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { IoMdHome } from "react-icons/io";
 export interface loginForm {
   userId: string;
   password: string;
@@ -15,6 +16,10 @@ interface LoginInProps {
   linkRoute: Route;
   IsspanTag?: boolean;
   headingStyle?: string;
+  loginProps:{
+    email:string;
+    password:string;
+  }
 }
 export interface loginData{
   message:string;
@@ -30,6 +35,7 @@ export default function LoginIn({
   linkRoute,
   headingStyle = "",
   IsspanTag = false,
+  loginProps ={email:"",password:""}
 }: LoginInProps) {
   const route = useRouter();
   const {
@@ -39,8 +45,8 @@ export default function LoginIn({
     reset,
   } = useForm<loginForm>({
     defaultValues: {
-      userId: "admin@gmail.com",
-      password: "admin12345",
+      userId: loginProps?.email,
+      password: loginProps?.password,
     },
     mode: "onChange",
   });
@@ -75,7 +81,10 @@ export default function LoginIn({
   };
 
   return (
-    <section className="w-fit  py-8 px-7 border border-gray-300 rounded-lg space-y-4 shadow-xl">
+    <section className="w-fit  py-8 px-7 border border-gray-300 dark:border-gray-600 rounded-lg space-y-2 sm:space-y-4 shadow-xl">
+     {
+      (headingName === "Admin" || headingName === "Doctor") && (<Link href={"/"} className="text-4xl hover:text-sky-600  cursor-pointer  absolute top-3 left-5"><IoMdHome/></Link>)
+     }
       <h2
         className={`text-3xl text-center ${
           headingStyle
@@ -86,7 +95,7 @@ export default function LoginIn({
         {headingName}{" "}
         {IsspanTag ? <span className="!text-[#5e5e5e]">Login</span> : ""}
       </h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5 sm:space-y-6  ">
         <Inputs
           inputType="text"
           label="User Id"
@@ -95,7 +104,7 @@ export default function LoginIn({
           validation={{ required: "User Id is Required" }}
           placeholder="Enter your User Id."
           error={errors?.userId}
-          divStyle="w-80"
+          divStyle="w-60 min-[400px]:max-sm:w-72 sm:w-80"
         />
         <Inputs
           inputType="password"
@@ -105,11 +114,11 @@ export default function LoginIn({
           validation={{ required: "Password is Required" }}
           placeholder="Enter your Password."
           error={errors?.password}
-          divStyle="w-80"
+          divStyle="w-60 min-[400px]:max-sm:w-72 sm:w-80"
         />
         <button
           type="submit"
-          className="w-full rounded-lg bg-[#5f6fff] text-white py-2 cursor-pointer font-medium mt-2"
+          className="w-full rounded-lg bg-[#5f6fff] text-white py-1.5 sm:py-2 cursor-pointer font-medium mt-2 max-sm:text-sm"
         >
           {isSubmitting ? "Submiting..." : "Login"}
         </button>

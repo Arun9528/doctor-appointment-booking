@@ -1,6 +1,6 @@
 "use client";
 
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { useRouter } from "next/navigation";
 
 export default function Complete_Appointment({

@@ -1,5 +1,5 @@
 "use client";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
@@ -23,19 +23,17 @@ export default function Confirmed_Cancelled_Appointment({appointmentId}: {appoin
           const errorData = await res.json()
           throw new Error(`fetching error: ${res.status} - ${errorData.message || 'Unknown error'}`);
         }
-        // const d = await res.json();
         route.refresh();
-        // console.log(d)
       } catch (error) {
         console.error("canceling error", error);
       }
   }
   return (
     <div>
-      <div className="flex justify-end gap-x-2">
+      <div className="flex  justify-center gap-x-2">
         <button
           type="button"
-          className="border border-gray-300 transition-colors duration-500 ease-in-out size-10 rounded-full justify-items-center
+          className="border border-gray-300 transition-colors duration-500 ease-in-out size-8 min-[450px]:size-10 rounded-full justify-items-center
          hover:bg-green-600 hover:text-white cursor-pointer text-green-600"
            onClick={handleConfirmAppointment}
         >
@@ -43,8 +41,8 @@ export default function Confirmed_Cancelled_Appointment({appointmentId}: {appoin
         </button>
         <button
           type="button"
-          className=" border border-gray-300  transition-colors duration-500 ease-in-out hover:bg-red-600 hover:text-white 
-        cursor-pointer text-red-600 size-10 rounded-full text-xl justify-items-center"
+          className=" border border-gray-300  transition-colors duration-500 ease-in-out   hover:bg-red-600 hover:text-white 
+        cursor-pointer text-red-600 size-8 min-[450px]:size-10 rounded-full text-xl justify-items-center"
           onClick={handleClickModal}
         >
           <IoClose />
@@ -52,7 +50,7 @@ export default function Confirmed_Cancelled_Appointment({appointmentId}: {appoin
       </div>
       <AnimatePresence mode="wait">
         {showModal && (
-          <Modal handleClickModal={handleClickModal}>
+          <Modal handleClickModal={handleClickModal} sectionStyle="w-72 min-[400px]:max-[500px]:w-96 min-[500px]:max-sm:w-md sm:w-xl md:w-2xl lg:w-3xl">
             <Doctor_Cancel_Modal
               handleClickModal={handleClickModal}
               appointmentId={appointmentId}

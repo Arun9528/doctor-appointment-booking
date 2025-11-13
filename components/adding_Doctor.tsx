@@ -11,7 +11,7 @@ import TextArea_Component from "./textarea_component";
 import { IoClose } from "react-icons/io5";
 import { timeSlots } from "@/public/timeSlotsList";
 import SortTimeSlots from "@/utils/sorttimeSlots";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 export type newDoctorForm = Omit<doctorData,"profile_photo" | "category" | "patients_appointments" | "education"> &
  { category: string,profile_photo:FileList | null,education:{name:string;}[]}
 export default function AddingDoctor() {
@@ -122,12 +122,12 @@ export default function AddingDoctor() {
     }
   }
   return (
-    <section className="border border-gray-300 px-5 py-8 rounded-lg shadow-sm mt-3.5">
+    <section className="border border-gray-300 dark:border-gray-800 px-5 py-8 rounded-lg shadow-sm mt-3.5">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-3 gap-5"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
       >
-        <div className="relative col-span-3 flex flex-col items-center">
+        <div className="relative md:col-span-2 lg:col-span-3 flex flex-col items-center">
           <div className="relative w-fit cursor-pointer">
             <input
               type="file"
@@ -180,7 +180,7 @@ export default function AddingDoctor() {
           <select
             id="doctor-specialist"
             {...register("category", { required: "Specialist is Required" })}
-            className={`outline-0 border rounded-md px-3 py-2 w-full text-sm  text-black/90
+            className={`outline-0 border rounded-md px-3 py-2 w-full text-sm  text-black/90 dark:text-white/80
              ${errors?.category ? "border-red-500" : "border-gray-300"}`}
           >
             {<option value="">Select Specialist</option>}
@@ -260,9 +260,9 @@ export default function AddingDoctor() {
           placeholder="Age"
           error={errors?.age}
         />        
-        <div className="grid grid-cols-2">
+        <div className="  md:col-span-2 grid  grid-cols-1  min-[400px]:grid-cols-2">
           <div>
-            <h2 className="text-[#5e5e5e] font-medium">Gender</h2>
+            <h2 className="text-[#5e5e5e] dark:text-white font-medium">Gender</h2>
             <div className="relative flex items-center gap-x-2 mt-1">
               <Inputs
                 inputType="radio"
@@ -291,7 +291,7 @@ export default function AddingDoctor() {
               )}
             </div>
           </div>
-          <div className="h-full content-end mb-3 relative">
+          <div className="h-full  content-end mb-3 relative">
             <div className="flex items-center gap-x-1">
               <input
                 type="checkbox"
@@ -301,7 +301,7 @@ export default function AddingDoctor() {
               />
               <label
                 htmlFor="available"
-                className="font-medium text-black/70 "
+                className="font-medium text-black/70 dark:text-white "
               >
                 Available
               </label>
@@ -313,13 +313,13 @@ export default function AddingDoctor() {
                 )}
           </div>
         </div>  
-        <div className="col-span-3 relative ">
+        <div className="md:col-span-2 lg:col-span-3 relative">
            <p className="label-title ">TimeSlot</p>
            <Controller
             name="booking_time_Slots"
             control={control}
             defaultValue={[]}
-            rules={{validate:(v:string[] | undefined)=> (Array.isArray(v) && v.length > 1) || "Please select a time slot"}}
+            rules={{validate:(v:string[] | undefined)=> (Array.isArray(v) && v?.length > 1) || "Please select a time slot"}}
             render={({field})=>{
               const { value = [],onChange} = field;
               const toggle = (slot:string)=>{
@@ -330,11 +330,9 @@ export default function AddingDoctor() {
                 }
                 onChange([...value,slot]);
               }
-              // const selectAll = () => onChange([...timeSlots]);
-              // const clearAll = () => onChange([]);
               return (
-                <div className={`flex flex-wrap z items-center gap-3 p-2 border rounded-md  text-black/80 
-                ${errors?.booking_time_Slots ? "border-red-500" : "border-gray-300"}`}>
+                <div className={`flex flex-wrap z items-center gap-3 p-2 border rounded-md  text-black/80 dark:text-white/80
+                ${errors?.booking_time_Slots ? "border-red-500" : "border-gray-300 dark:border-gray-800"}`}>
                {timeSlots?.map((time,i) => {
                 const isSelected = value?.includes(time);
                 
@@ -345,8 +343,8 @@ export default function AddingDoctor() {
                   // aria-disabled={isSelected}
                   aria-pressed= {isSelected}
                   aria-label={`${isSelected ? "Unselect" : "Select"} ${time}`}
-               className={`border p-2 rounded-md text-sm cursor-pointer duration-300 transition-colors ease-in-out 
-                ${isSelected ? "bg-sky-600 text-white" : "hover:bg-sky-500 hover:text-white border-gray-300"}`}>
+               className={`border p-2 rounded-md text-xs lg:text-sm cursor-pointer duration-300 transition-colors ease-in-out 
+                ${isSelected ? "bg-sky-600 text-white" : "hover:bg-sky-500 hover:text-white border-gray-300 dark:border-gray-800"}`}>
                   {time}</button>
                 )
                })}
@@ -358,11 +356,11 @@ export default function AddingDoctor() {
               <p className="text-red-600 text-xs absolute top-full">{errors?.booking_time_Slots?.message as string}</p>
             )}
         </div>   
-        <div className="col-span-3 relative">
+        <div className="md:col-span-2 lg:col-span-3 relative">
           <label className="block mb-1 label-title">Education(Degree)</label>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {fields?.map((field, i) => (
-              <div key={field?.id} className="flex items-center gap-2 mb-2 relative">
+              <div key={field?.id} className="flex items-center gap-2 mb-2 relative shrink-0">
                 <input
                   type="text"
                   {...register(`education.${i}.name` as const, {
@@ -379,7 +377,7 @@ export default function AddingDoctor() {
                     <button
                   type="button"
                   onClick={() => remove(i)}
-                  className=" size-5 bg-red-600 cursor-pointer text-white rounded-full flex justify-center items-center shrink-0"
+                  className=" size-5 bg-red-600 cursor-pointer text-white rounded-full flex justify-center items-center"
                 >
                   <IoClose />
                 </button>
@@ -414,7 +412,7 @@ export default function AddingDoctor() {
           validation={{ required: "About is Required" }}
           placeholder="Write Something About yourself."
           error={errors?.about}
-          divStyle="col-span-3"
+          divStyle="md:col-span-2 lg:col-span-3"
         />        
         <div>
           <button

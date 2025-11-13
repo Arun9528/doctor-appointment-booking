@@ -5,7 +5,7 @@ export default function DoctorDashboardLayout({children}:Readonly<{children:Reac
     return (
         <div className="min-h-screen">
             <DashBoardHeader loginTitle="Doctor"/>
-            <main className="grid grid-cols-[15%_85%]">
+            <main className="flex ">
                 <DashBoardSidebar isAdmin={false}/>
                 {children}
             </main>

@@ -1,49 +1,42 @@
 "use client";
 
-import { BASE_URL } from "@/base";
-import useGetCategory from "@/hooks/useGetCategory";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import CategoryList from "./categoryList";
+import { AnimatePresence,motion } from "motion/react";
 
 export default function Sidebar_Speciatly() {
-  const Path = usePathname()?.split("/")[2];
-  const getCategory = useGetCategory();
-  if (getCategory.length <= 0) {
-    return (
-      <div className=" border text-center pt-10  rounded-md">
-        <h1 className="  md:text-lg lg:text-xl font-semibold">Loading...</h1>
-      </div>
-    );
-  }
-
+  const [showfilterbtn, setShowFilterbtn] = useState<boolean>(false);
+  
   return (
-    <aside className="flex flex-col gap-y-4">
-      {getCategory?.map((doc, i) => {
-        const correctPath =
-          doc?.name === "General physician"
-            ? "general-physician"
-            : doc?.name?.toLowerCase();
-        return (
-          <Link
-            key={doc?._id}
-            href={`/doctors/${
-              doc?.name === "General physician"
-                ? "general-physician"
-                : doc?.name?.toLowerCase()
-            }`}
-            className={`text-[#4B5563] dark:text-white/90 text-sm border border-gray-300 dark:border-gray-800 
-              cursor-pointer px-2 py-1.5 rounded-md
-              ${
-                correctPath === Path
-                  ? "bg-[#5f6fff] text-white  "
-                  : "hover:bg-[#bdc4ff] hover:text-black/70"
-              }`}
+    <aside className="space-y-3">
+      <div className="max-sm:block hidden space-y-2">
+        <h2>Browse through the doctors specialist.</h2>
+        <button
+          type="button"
+          onClick={() => setShowFilterbtn((prev) => !prev)}
+          className={`border border-gray-300 rounded-md w-fit py-1 px-5 ${ showfilterbtn ? "bg-sky-600 border-sky-600" : ""}`}
           >
-            {doc?.name}
-          </Link>
-        );
-      })}
+          Filter
+        </button>
+      </div>
+     <AnimatePresence mode="wait">
+       {
+        showfilterbtn && (
+          <motion.div
+          initial ={{opacity:0,height:0}}
+          animate={{opacity:1,height:"auto"}}
+          exit={{opacity:0,height:0}}
+          transition={{duration:0.3,ease:"easeInOut"}}
+          className="grid grid-cols-1 min-[350px]:max-[500px]:grid-cols-2 min-[500px]:max-sm:grid-cols-3 gap-4 z-50 border rounded-lg px-4 py-5  sm:hidden"
+          >
+            <CategoryList />
+          </motion.div>
+        )
+      }
+     </AnimatePresence>
+      <div className="hidden sm:flex flex-col gap-y-4">
+        <CategoryList/>
+      </div>
     </aside>
   );
 }

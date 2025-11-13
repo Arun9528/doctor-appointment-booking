@@ -1,13 +1,15 @@
-import { BASE_URL, IMAGE_URL } from "@/base";
 import SidebarSuggestion from "@/components/doctorAppointmentPage/sidebarSuggestion";
 import AddAppointment from "@/components/user/addAppointment";
+import { BASE_URL, IMAGE_URL } from "@/lib/config";
 import { doctorData } from "@/lib/types";
+import CheckingAuth from "@/utils/checkingAuth";
 import Image from "next/image";
 import { FaGraduationCap } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 
 export default async function DocAppointment(props: PageProps<"/doctors/[specialty]/[docName]">) {
   try {
+    const checkingAuth = await CheckingAuth()
     const specialtyName = (await props?.params)?.specialty;
     const getId = await props?.searchParams;
     const res = await fetch(`${BASE_URL}doctors/${getId?.id}`, {
@@ -15,14 +17,15 @@ export default async function DocAppointment(props: PageProps<"/doctors/[special
     });
     if (!res.ok) throw new Error(`fetching error ${res?.status}`);
     const doctorDetails: doctorData = await res?.json();
-
+    
+    
     return (
-      <main className=" min-h-[calc(100vh-3.8rem)] px-20 pt-10 space-y-3.5">
+      <main className=" min-h-[calc(100vh-3.8rem)] responsive_left-right_padding pt-10 space-y-3.5">
         <h1 className="text-2xl font-bold ">Details</h1>
-        <section className="grid grid-cols-[75%_23%] gap-x-7">
+        <section className="grid grid-cols-1 min-[1160px]:grid-cols-[75%_23%] gap-7">
           <section className="space-y-6">
-            <div className="border border-gray-200 dark:border-gray-700 rounded-lg flex items-center justify-between shadow-lg p-5">
-              <div className="flex items-center gap-x-10">
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg flex max-sm:flex-col items-center justify-between shadow-lg p-5 max-sm:gap-y-3">
+              <div className="flex max-sm:flex-col max-sm:gap-y-3 items-center gap-x-10">
                 <div className="bg-gray-200/70 rounded-lg">
                   <Image
                     src={`${IMAGE_URL}${doctorDetails?.profile_photo}`}
@@ -30,40 +33,40 @@ export default async function DocAppointment(props: PageProps<"/doctors/[special
                     width={140}
                     height={140}
                     unoptimized
-                    className="object-contain w-[140px] h-[140px]"
+                    className="object-contain w-[140px] h-[140px] shrink-0"
                     priority
                   />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-medium text-xl">{doctorDetails?.name}</h3>
-                  <p className="text-gray-500 flex items-center gap-x-2 text-sm">
+                  <h3 className="font-medium text-lg sm:text-xl">{doctorDetails?.name}</h3>
+                  <p className="text-gray-500 dark:text-white/80 flex flex-wrap items-center gap-x-2 text-xs sm:text-sm">
                     <FaGraduationCap className="text-lg" />
                     {doctorDetails?.education?.map((edu) => (
                       <span key={edu}>{edu},</span>
                     ))}
-                    <span>
+                    <span className="max-[400px]:pl-10">
                       {doctorDetails?.experienceYears} Years of Experience
                     </span>
                   </p>
-                  <p className="text-gray-500 flex items-center gap-x-2 text-sm">
-                    <FaLocationDot />
-                    <span>{doctorDetails?.clinic_address}</span>
+                  <p className="text-gray-500 dark:text-white/80 flex items-center gap-x-2 text-xs sm:text-sm">
+                    <FaLocationDot className="shrink-0" />
+                    <span className="max-sm:text-xs">{doctorDetails?.clinic_address}</span>
                   </p>
-                  <p className="text-gray-500 flex items-center gap-x-2 text-sm">
+                  <p className="text-gray-500 dark:text-white/80 flex items-center gap-x-2 text-xs sm:text-sm">
                     <span className="font-medium">Appointment Fee : </span>
                     <span> &#8377; {doctorDetails?.appointmentFee}</span>
                   </p>
-                  <p className="text-[10px] text-sky-500 font-semibold bg-[#CFE4F7] px-3 py-1 w-fit rounded-4xl capitalize">
+                  <p className="text-[10px] text-sky-500 font-medium sm:font-semibold bg-[#CFE4F7] dark:bg-gray-800 px-3 py-1 w-fit rounded-4xl capitalize">
                     {specialtyName?.replace("-", " ")}
                   </p>
                 </div>
               </div>
 
-              <AddAppointment doctorId={getId?.id as string} />
+              <AddAppointment doctorId={getId?.id as string} authCheck={!!checkingAuth}/>
             </div>
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-5 shadow-lg space-y-2">
               <h2 className="text-xl font-bold ">About Me</h2>
-              <p className="text-[#5e5e5e] text-sm">
+              <p className="text-[#5e5e5e] dark:text-white/80 text-xs sm:text-sm">
                 {doctorDetails?.about} Lorem ipsum dolor sit amet consectetur
                 adipisicing elit. Delectus esse maxime enim fuga temporibus. A
                 corporis voluptatum dicta, reprehenderit praesentium mollitia

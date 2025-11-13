@@ -1,9 +1,9 @@
 "use client";
 
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { AnimatePresence } from "motion/react";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Modal from "./modal";
 
 export default function Doc_Isavailable_Delete_Comp({
@@ -96,15 +96,15 @@ export default function Doc_Isavailable_Delete_Comp({
       </div>
       <AnimatePresence mode="wait">
         {showModal && (
-          <Modal sectionStyle="w-fit " handleClickModal={handleClickModal}>
+          <Modal sectionStyle="w-80 min-[400px]:max-[550px]:w-sm min-[550px]:w-lg" handleClickModal={handleClickModal}>
             <section>
-              <p className="text-2xl font-medium">
+              <p className="text-lg min-[400px]text-xl sm:text-2xl font-medium">
                 Are you sure you want to Delete this Doctor?
               </p>
               <div className="text-end space-x-2.5 mt-5">
                 <button
                   type="button"
-                  className="bg-green-600 px-5 py-1 cursor-pointer text-white rounded-lg text-lg"
+                  className="bg-green-600 px-5 py-1 cursor-pointer text-white rounded-lg text-sm min-[400px]:max-sm:text-base sm:text-lg"
                   onClick={handleDelete}
                   disabled={isLoading}
                 >
@@ -112,7 +112,7 @@ export default function Doc_Isavailable_Delete_Comp({
                 </button>
                 <button
                   type="button"
-                  className="bg-red-600 px-5 py-1 cursor-pointer text-white rounded-lg text-lg"
+                  className="bg-red-600 px-5 py-1 cursor-pointer text-white rounded-lg text-sm min-[400px]:max-sm:text-base sm:text-lg "
                   onClick={handleClickModal}
                 >
                   No

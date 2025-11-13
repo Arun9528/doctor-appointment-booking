@@ -23,7 +23,7 @@ export default function DarkModeBtn(){
         })
     }
     return  (
-        <button type="button" className="cursor-pointer  text-xs min-[400px]:max-sm:text-sm sm:text-lg hover:outline-8 hover:outline-gray-200/80 hover:bg-gray-200/80 dark:hover:outline-gray-500 dark:hover:bg-gray-500 hover:rounded-full transition-normal duration-300 ease-in-out" 
+        <button type="button" className="cursor-pointer text-base sm:text-lg hover:outline-8 hover:outline-gray-200/80 hover:bg-gray-200/80 dark:hover:outline-gray-500 dark:hover:bg-gray-500 hover:rounded-full transition-normal duration-300 ease-in-out" 
         onClick={handleDarkMode}>{isDark ? <FaSun className="text-yellow-400"/> : <FaMoon />}</button>
     )
 }

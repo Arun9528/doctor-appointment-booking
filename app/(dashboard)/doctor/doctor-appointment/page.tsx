@@ -1,4 +1,4 @@
-import { BASE_URL, IMAGE_URL } from "@/base";
+import { BASE_URL, IMAGE_URL } from "@/lib/config";
 import Complete_Appointment from "@/components/doctor/complete_appointment";
 import Confirmed_Cancelled_Appointment from "@/components/doctor/confirmed_cancelled_appointment";
 import { doctorAppointment } from "@/lib/types";
@@ -22,14 +22,14 @@ export default async function DoctorAppointment() {
      if (!res.ok) throw new Error(`fetching error ${res.status}`);
      const Appointments:doctorAppointment = await res.json();
      const allAppointment = Appointments?.data
-     console.log(allAppointment);
      return (
-    <section className="p-5">
+    <section className="p-5 overflow-hidden">
       <h1 className="text-2xl font-bold pl-1">All Appointments</h1>
-      <div className="border rounded-lg overflow-hidden mt-6">
-        <table className="w-full table-fixed border-collapse ">
+      <div className="overflow-x-scroll">
+        <div className="border rounded-lg  mt-6 w-4xl  min-[1200px]:w-full">
+        <table className="w-full table-fixed border-collapse  ">
           <thead>
-            <tr className="border-b bg-gray-100">
+            <tr className="border-b bg-gray-100 dark:bg-gray-800">
               <th className="w-20">Sr.No</th>
               <th>Patient</th>
               <th className="w-20">Payment</th>
@@ -39,7 +39,7 @@ export default async function DoctorAppointment() {
               <th className="w-20">CancelledBy</th>
               <th>Remark</th>
               <th>Status</th>
-              <th className="w-52">Action</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody className="">
@@ -70,22 +70,7 @@ export default async function DoctorAppointment() {
                 <td>{patient?.cancellation?.cancelledBy === "doctor" ? "You" : patient?.cancellation?.cancelledBy}</td>
                 <td>{patient?.cancellation?.remarkToPatient || ""}</td>
                 <td className={`capitalize font-medium`}>{patient?.status}</td>
-                {/* <td className="text-red-600 font-medium">Cancelled</td> */}
-                {/* <td className="text-green-600 font-medium">Completed</td> */}
                 <td>
-                  {/* <button
-                    type="button"
-                    className="border border-gray-300 transition-colors duration-500 ease-in-out size-10 rounded-full justify-items-center hover:bg-green-600 hover:text-white cursor-pointer text-green-600"
-                  >
-                    <FaCheck />
-                  </button>
-                  <button
-                    type="button"
-                    className=" border border-gray-300  transition-colors duration-500 ease-in-out hover:bg-red-600
-                     hover:text-white cursor-pointer text-red-600 size-10 rounded-full text-xl justify-items-center"
-                  >
-                    <IoClose />
-                  </button> */}
                   {
                     patient?.status === "pending" && (<Confirmed_Cancelled_Appointment appointmentId={patient?._id} />)
                   }
@@ -105,6 +90,7 @@ export default async function DoctorAppointment() {
             }
           </tbody>
         </table>
+      </div>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { BASE_URL, IMAGE_URL } from "@/base";
+import { BASE_URL, IMAGE_URL } from "@/lib/config";
 import Confirmed_Cancelled_Appointment from "@/components/doctor/confirmed_cancelled_appointment";
 import { doctorAppointment } from "@/lib/types";
 import { Metadata } from "next";
@@ -12,70 +12,68 @@ export const metadata: Metadata = {
   title: "Doctor DashBoard",
   description: "this is a Doctor Dashboard Page.",
 };
+export const dynamic = "force-dynamic";
 export default async function DoctorDashBoard() {
   try {
     const cookieStore = await cookies();
-    //  console.log(cookieStore.get("token"))
     const cookieHeader = cookieStore
       ?.getAll()
       ?.map((c) => `${c?.name}=${c?.value}`)
       .join("; ");
-    //  console.log(cookieHeader)
     const res = await fetch(`${BASE_URL}appointments/doctor?status=pending&limit=6`, {
       method: "GET",
       headers: { cookie: cookieHeader || "" },
       cache: "no-store",
     });
-    if (!res.ok) throw new Error(`fetching error ${res.status}`);
+    if (!res.ok) throw new Error(`fetching error ${res?.status}`);
     const doctorAppointment: doctorAppointment = await res.json();
     const Appointmentdata = doctorAppointment?.data;
-    console.log(doctorAppointment)
     return (
-      <section className="px-10 py-5 ">
-        <div className="grid grid-cols-3 gap-x-7">
-          <div className="border border-gray-200 px-5 py-7 rounded-2xl shadow-sm">
+      <section className="px-3 md:px-5 lg:px-10 py-5 flex-1 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-3 max-lg:gap-y-5 lg:gap-x-7">
+          <div className="border border-gray-200 dark:border-gray-800 px-5 py-7 rounded-2xl shadow-sm">
             <div className="flex items-center gap-x-4">
-              <FaUserDoctor className="text-4xl" />
+              <FaUserDoctor className="text-4xl shrink-0" />
               <div>
-                <p className="font-semibold text-xl text-[#5e5e5e]">{Appointmentdata?.summary?.totalRevenue}</p>
-                <p className="text-gray-600">Earnings</p>
+                <p className="font-semibold text-xl text-[#5e5e5e] dark:text-white/80">{Appointmentdata?.summary?.totalRevenue}</p>
+                <p className="text-gray-600 dark:text-white/70">Earnings</p>
               </div>
             </div>
           </div>
-          <div className="border border-gray-200 px-5 py-7 rounded-2xl shadow-sm">
+          <div className="border border-gray-200 dark:border-gray-800 px-5 py-7 rounded-2xl shadow-sm">
             <div className="flex items-center gap-x-4">
-              <MdOutlineContentPasteSearch className="text-[40px]" />
+              <MdOutlineContentPasteSearch className="text-[40px] shrink-0" />
               <div>
-                <p className="font-semibold text-xl text-[#5e5e5e]">
+                <p className="font-semibold text-xl text-[#5e5e5e] dark:text-white/80">
                   {Appointmentdata?.summary?.totalAppointment}
                 </p>
-                <p className="text-gray-600">Appointments</p>
+                <p className="text-gray-600 dark:text-white/70">Appointments</p>
               </div>
             </div>
           </div>
-          <div className="border border-gray-200 px-5 py-7 rounded-2xl shadow-sm">
+          <div className="border border-gray-200 dark:border-gray-800 px-5 py-7 rounded-2xl shadow-sm">
             <div className="flex items-center gap-x-4">
-              <FaUser className="text-4xl " />
+              <FaUser className="text-4xl shrink-0" />
               <div>
-                <p className="font-semibold text-xl text-[#5e5e5e]">
+                <p className="font-semibold text-xl text-[#5e5e5e] dark:text-white/80">
                   {Appointmentdata?.summary?.totalPatient}
                 </p>
-                <p className="text-gray-600">Patients</p>
+                <p className="text-gray-600 dark:text-white/70">Patients</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="mt-10 border border-gray-200 rounded-2xl shadow-sm px-5 py-4 space-y-6">
+        <div className="mt-10 border border-gray-200 rounded-2xl shadow-sm px-5 py-4 space-y-6 max-[450px]:overflow-x-scroll my-scroll">
           <h2 className="text-2xl font-semibold">Latest Booking</h2>
           {
             Appointmentdata.appointments.length > 0 ? (
               Appointmentdata?.appointments?.map((patient) => (
             <div
               key={patient?.userId?._id}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between max-[450px]:w-80"
             >
               <div className="flex items-center gap-x-4">
-                <div className="size-12 relative rounded-full bg-gray-200 overflow-hidden  ">
+                <div className="size-10  min-[450px]:size-12 relative rounded-full bg-gray-200 overflow-hidden shrink-0 ">
                   <Image
                     src={`${IMAGE_URL}${patient?.userId?.profile_photo}`}
                     alt="doctor Photo"
@@ -119,50 +117,9 @@ export default async function DoctorDashBoard() {
             </div>
           ))
             ) : <div className="text-center">
-                <p className="text-lg text-black/80">There is no Appointment</p>
+                <p className="text-lg text-black/80 dark:text-white/80">There is no Appointment</p>
             </div>
           }
-
-          {/* <div className="flex items-center justify-between">
-          <div className="flex items-center gap-x-4">
-            <div className="size-12 relative rounded-full bg-gray-200 overflow-hidden  ">
-              <Image
-                src={"/docPhotos/image (1).png"}
-                alt="doctor Photo"
-                width={100}
-                height={20}
-                className="bg-center"
-              />
-            </div>
-            <div>
-              <p className=" font-medium">Dr. Richard James</p>
-              <p className="text-gray-400 text-xs">
-                Booking on 5 Oct 2024 | 10:00 AM
-              </p>
-            </div>
-          </div>
-          <p className="text-red-600 text-sm font-medium">Cancelled</p>
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-x-4">
-            <div className="size-12 relative rounded-full bg-gray-200 overflow-hidden  ">
-              <Image
-                src={"/docPhotos/image (1).png"}
-                alt="doctor Photo"
-                width={100}
-                height={20}
-                className="bg-center"
-              />
-            </div>
-            <div>
-              <p className=" font-medium">Dr. Richard James</p>
-              <p className="text-gray-400 text-xs">
-                Booking on 5 Oct 2024 | 10:00 AM
-              </p>
-            </div>
-          </div>
-          <p className="text-green-700 text-sm font-medium">Completed</p>
-        </div> */}
         </div>
       </section>
     );

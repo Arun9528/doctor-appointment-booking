@@ -1,5 +1,4 @@
-import { BASE_URL, IMAGE_URL } from "@/base";
-import Confirmed_Cancelled_Appointment from "@/components/doctor/confirmed_cancelled_appointment";
+import { BASE_URL, IMAGE_URL } from "@/lib/config";
 import { AdminDashboard } from "@/lib/types";
 import { Metadata, Route } from "next";
 import { cookies } from "next/headers";
@@ -13,13 +12,11 @@ export const metadata: Metadata = {
   title: "Admin DashBoard",
   description: "This is Admin DashBoard",
 };
+export const dynamic = "force-dynamic";
 export default async function AdminDashBoard() {
   try {
     const cookieStore = await cookies();
-    const cookieHeader = cookieStore
-      .getAll()
-      ?.map((c) => `${c?.name}=${c?.value}`)
-      .join("; ");
+    const cookieHeader = cookieStore?.getAll()?.map((c) => `${c?.name}=${c?.value}`).join("; ");
     const res = await fetch(`${BASE_URL}admin/dashboard`, {
       method: "GET",
       headers: { cookie: cookieHeader || " " },
@@ -31,60 +28,60 @@ export default async function AdminDashBoard() {
     }
     const getData = await res.json();
     const dashboardData: AdminDashboard = getData?.data;
-    // console.log(dashboardData);
     return (
-      <section className="px-10 py-5 ">
-        <div className="grid grid-cols-3 gap-x-7">
-          <div className="border border-gray-200 px-5 py-7 rounded-2xl shadow-sm">
+      <section className="px-3 md:px-5 lg:px-10 py-5 flex-1 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-3 max-lg:gap-y-5 lg:gap-x-7">
+          <div className="border border-gray-200 dark:border-gray-800 px-5 py-7 rounded-2xl shadow-sm">
             <div className="flex items-center gap-x-4">
-              <FaUserDoctor className="text-4xl" />
+              <FaUserDoctor className="text-4xl shrink-0" />
               <div>
-                <p className="font-semibold text-2xl text-[#5e5e5e]">
+                <p className="font-semibold text-2xl text-[#5e5e5e] dark:text-white/80">
                   {dashboardData?.summary?.totalDoctors}
                 </p>
-                <p className="text-gray-600">Doctors</p>
+                <p className="text-gray-600 dark:text-white/70">Doctors</p>
               </div>
             </div>
           </div>
-          <div className="border border-gray-200 px-5 py-7 rounded-2xl shadow-sm">
+          <div className="border border-gray-200 dark:border-gray-800 px-5 py-7 rounded-2xl shadow-sm">
             <div className="flex items-center gap-x-4">
-              <MdOutlineContentPasteSearch className="text-[40px]" />
+              <MdOutlineContentPasteSearch className="text-[40px] shrink-0" />
               <div>
-                <p className="font-semibold text-2xl text-[#5e5e5e]">
+                <p className="font-semibold text-2xl text-[#5e5e5e] dark:text-white/80">
                   {dashboardData?.summary?.totalAppointments}
                 </p>
-                <p className="text-gray-600">Appointments</p>
+                <p className="text-gray-600 dark:text-white/70">Appointments</p>
               </div>
             </div>
           </div>
-          <div className="border border-gray-200 px-5 py-7 rounded-2xl shadow-sm">
+          <div className="border border-gray-200 dark:border-gray-800 px-5 py-7 rounded-2xl shadow-sm">
             <div className="flex items-center gap-x-4">
-              <FaUser className="text-4xl " />
+              <FaUser className="text-4xl  shrink-0" />
               <div>
-                <p className="font-semibold text-2xl text-[#5e5e5e]">
+                <p className="font-semibold text-2xl text-[#5e5e5e] dark:text-white/80">
                   {dashboardData?.summary?.totalPatients}
                 </p>
-                <p className="text-gray-600">Patients</p>
+                <p className="text-gray-600 dark:text-white/70">Patients</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="mt-10 border border-gray-200 rounded-2xl shadow-sm px-5 py-4 space-y-6">
+        <div className="mt-10 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm px-5 py-4 space-y-6 overflow-hidden">
          <div className="flex justify-between items-center">
-             <h2 className="text-2xl font-semibold">Latest Booking</h2>
-             <Link href={"/admin/doctors-appointments" as Route} className="underline-offset-2 hover:underline hover:text-sky-600 text-sm ">See All</Link>
+             <h2 className="text-xl sm:text-2xl font-semibold">Latest Booking</h2>
+             <Link href={"/admin/doctors-appointments" as Route} className="underline-offset-2 hover:underline hover:text-sky-600   text-[10px] sm:text-sm ">See All</Link>
          </div>
-          <div className="border rounded-lg overflow-hidden mt-6">
+          <div className="max-lg:overflow-x-scroll mt-6 my-scroll">
+            <div className="border rounded-lg w-4xl lg:w-full">
             <table className="w-full table-fixed border-collapse ">
               <thead>
-                <tr className="border-b bg-gray-100">
+                <tr className="border-b bg-gray-100 dark:bg-gray-800">
                   <th className="w-20">Sr.No</th>
                   <th>Doctor</th>
                   <th className="w-20">Age</th>
                   <th className="w-52">Date & Time</th>
                   <th>Patient</th>
                   <th className="w-20">Fees</th>
-                  <th className="w-36">Status</th>
+                  <th >Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -101,7 +98,7 @@ export default async function AdminDashBoard() {
                           alt="Patient Photo"
                           width={70}
                           height={70}
-                          className="size-10 rounded-full object-contain bg-gray-300"
+                          className="size-10 rounded-full object-contain bg-gray-300 shrink-0"
                           unoptimized
                         />
                         <span className="capitalize">
@@ -128,10 +125,7 @@ export default async function AdminDashBoard() {
                       </td>
                       <td>&#8377; {appointment?.providerId?.appointmentFee}</td>
                       <td>
-                        {appointment?.status === "pending" && (
-                          //    <Confirmed_Cancelled_Appointment appointmentId={appointment?._id} />
-                          <p className="text-yellow-500 font-medium">Pending</p>
-                        )}
+                        {appointment?.status === "pending" && (<p className="text-yellow-500 font-medium">Pending</p>)}
                         {appointment?.status === "confirmed" && (<p className="text-sky-500 font-medium ">Confirmed</p>)}
                         {appointment?.status === "completed" && (<p className="text-green-600 font-medium "> Complete</p>)}
                         {appointment?.status === "cancelled" && (<p className="text-red-600 font-medium ">Cancelled</p>)}
@@ -147,6 +141,7 @@ export default async function AdminDashBoard() {
                 )}
               </tbody>
             </table>
+          </div>
           </div>
         </div>
       </section>

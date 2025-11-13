@@ -4,7 +4,7 @@ export interface cookiesProps{
     _id?:string;
     photo:string;
 }
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 
 export default async function FetchingCookies( cookiesHeader: string): Promise<cookiesProps | null>{
     if (!cookiesHeader) return null;

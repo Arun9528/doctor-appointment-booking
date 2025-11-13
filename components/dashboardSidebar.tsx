@@ -65,8 +65,8 @@ export default function DashBoardSidebar({isAdmin}:{isAdmin:boolean}) {
     const path = usePathname();
     const CheckPath = path.split("/")[2];
   return (
-    <aside className="border-r border-gray-300 min-h-[calc(100vh-3.8rem)] shadow-lg">
-      <nav className="mt-5">
+    <aside className="border-r border-gray-300 dark:border-gray-800 min-h-[calc(100vh-3.8rem)] shadow-lg  w-10 md:w-60 shrink-0">
+      <nav className="mt-5 ">
         {
           isAdmin ? (adminSidebar?.map((d) =>{
             const isPath = CheckPath === d?.pathCheck
@@ -74,11 +74,11 @@ export default function DashBoardSidebar({isAdmin}:{isAdmin:boolean}) {
           <Link
             key={d?.title}
             href={d?.titleLink}
-            className={`w-full flex pl-10 items-center gap-3 py-3.5 
+            className={`w-full flex max-md:justify-center  md:pl-10 items-center md:gap-3 py-3.5 
             ${isPath ? "bg-sky-600" : "hover:bg-gray-200/70"}`}
           >
-            <span className={`${isPath ? "text-white" : "text-black/80"}`}>{d?.icon}</span>
-            <span className={`${isPath ? "text-white" : "text-gray-600"}`}>{d?.title}</span>
+            <span className={`${isPath ? "text-white" : "text-black/80 dark:text-gray-300"}`}>{d?.icon}</span>
+            <span className={`${isPath ? "text-white" : "text-gray-600"} hidden md:inline `}>{d?.title}</span>
           </Link>
         )
         })) :
@@ -89,11 +89,11 @@ export default function DashBoardSidebar({isAdmin}:{isAdmin:boolean}) {
           <Link
             key={d?.title}
             href={d?.titleLink}
-            className={`w-full flex pl-10 items-center gap-3 py-3.5 
+            className={`w-full flex max-md:justify-center  md:pl-10 items-center md:gap-3 py-3.5
             ${isPath ? "bg-sky-600" : "hover:bg-gray-200/70"}`}
           >
-            <span className={`${isPath ? "text-white" : "text-black/80"}`}>{d?.icon}</span>
-            <span className={`${isPath ? "text-white" : "text-gray-600"}`}>{d?.title}</span>
+            <span className={`${isPath ? "text-white" : "text-black/80 dark:text-gray-300"} `}>{d?.icon}</span>
+            <span className={`${isPath ? "text-white" : "text-gray-600"} hidden md:inline`}>{d?.title}</span>
           </Link>
         )
         }))

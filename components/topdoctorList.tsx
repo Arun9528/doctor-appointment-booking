@@ -1,6 +1,6 @@
 import { doctorData } from "@/lib/types";
 import Cards from "./cards";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 
 export default async function TopDoctorList(){
     try {
@@ -8,7 +8,7 @@ export default async function TopDoctorList(){
     if(!res.ok) throw new Error(`fetching error ${res.status}`)
     const data:doctorData[] = await res.json();
     return (
-        <div className="flex flex-wrap gap-5 justify-between py-10">
+        <div className="flex flex-wrap gap-5 justify-center sm:justify-between py-10">
           {data?.map(doc => <Cards key={doc?._id}  data={doc} showAvaiable={false} />)}
         </div>
         )

@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import Cards from "@/components/cards";
 import { doctorData } from "@/lib/types";
 
@@ -9,7 +9,8 @@ export default async function Doctors() {
       if(!res?.ok) throw new Error(`fetching Failed ${res?.status}`);
       const allDoctorlist:doctorData[] = await res.json();
       return (
-         <section className=" grid grid-cols-4 gap-6" >
+         <section className=" grid min-md:max-lg:grid-cols-2 min-lg:max-[1350px]:grid-cols-3 min-[1350px]:grid-cols-4 gap-6
+          min-md:max-lg:justify-items-end max-md:justify-items-center" >
             {
                 allDoctorlist?.map((doclist)=> <Cards key={doclist?._id}  data={doclist} showAvaiable={false} /> )
             }

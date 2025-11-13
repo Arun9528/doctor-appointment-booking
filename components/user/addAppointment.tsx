@@ -3,7 +3,7 @@ import { AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
 import Modal from "../modal";
 import AppointmentRegister from "../doctorAppointmentPage/AppoitmentRegister";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { useRouter } from "next/navigation";
 import { Route } from "next";
 interface exitsProps {
@@ -13,12 +13,13 @@ interface exitsProps {
   timeSlot: string;
   appointmentId: string;
 }
-export default function AddAppointment({ doctorId }: { doctorId: string }) {
+export default function AddAppointment({ doctorId,authCheck}: { doctorId: string,authCheck:boolean}) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isExits, setIsExits] = useState<exitsProps | null>(null);
-  const [loading,setLoading] = useState<boolean>(false)
+  const [loading,setLoading] = useState<boolean>(false);
   const route = useRouter();
   useEffect(() => {
+    if(!authCheck) return 
     checkAppointmentStatus();
   }, [doctorId]);
 
@@ -35,6 +36,7 @@ export default function AddAppointment({ doctorId }: { doctorId: string }) {
         );
         if (!res.ok) {
           if (res.status === 401) {
+            console.log("it's int")
             route.push("/user/login" as Route);
             return;
           }
@@ -76,13 +78,20 @@ export default function AddAppointment({ doctorId }: { doctorId: string }) {
       setLoading(false)
     }
   };
-  const handleClickModal = () => setShowModal((prev) => !prev);
+  const handleClickModal = () => {
+   if(!authCheck){
+      route.push("/user/login" as Route)
+   }else{
+    setShowModal((prev) => !prev);
+   }
+    
+  }
   const handleBookingSuccess = ()=>{
     checkAppointmentStatus()
     setShowModal(false)
   }
   return (
-    <div className="">
+    <div className="overflow-hidden">
       {isExits?.alreadyRequested && (
         <p className="text-black/70 dark:text-white/90 text-sm text-center mb-2">
           <span>
@@ -93,15 +102,15 @@ export default function AddAppointment({ doctorId }: { doctorId: string }) {
       )}
       <button
         type="button"
-        className={`${isExits?.alreadyRequested ? "bg-red-600" : "bg-sky-600"}
-       text-white rounded-lg text-sm px-4 py-2 cursor-pointer`}
+        className={`${isExits?.alreadyRequested ? "bg-red-600" : "bg-sky-600 dark:bg-gray-800 "}
+       text-white dark:text-sky-600 rounded-lg  text-sm px-4 py-1.5 sm:py-2 cursor-pointer max-sm:mt-2`}
         onClick={handleClickModal}
       >
         {loading ? "Processing...": isExits?.alreadyRequested ? "Cancel Appointment" : "Book Appointment"}
       </button>
       <AnimatePresence mode="wait">
         {showModal && !isExits?.alreadyRequested && (
-          <Modal handleClickModal={handleClickModal}>
+          <Modal handleClickModal={handleClickModal} sectionStyle="  max-[400px]:w-[19rem] min-[400px]:max-md:w-[24rem] md:w-[47rem] overflow-y-scroll max-md:!h-[40rem]">
             <AppointmentRegister
               doctorId={doctorId}
               handleClickModal={handleClickModal}
@@ -110,22 +119,23 @@ export default function AddAppointment({ doctorId }: { doctorId: string }) {
           </Modal>
         )}
         {showModal && isExits?.alreadyRequested && (
-          <Modal handleClickModal={handleClickModal} sectionStyle="w-fit">
+          <Modal handleClickModal={handleClickModal} sectionStyle="w-80 min-[400px]:max-[550px]:w-sm min-[550px]:w-lg"  >
             <section>
-              <p className="text-2xl font-medium">
+              <p className="text-lg min-[400px]text-xl sm:text-2xl font-medium">
                 Are you sure you want to cancel the appointment?
               </p>
               <div className="text-end space-x-2.5 mt-5">
                 <button
                   type="button"
-                  className="bg-green-600 px-5 py-1 cursor-pointer text-white rounded-lg text-lg"
+                  className="bg-green-600 px-5 py-1 cursor-pointer text-white rounded-lg text-sm min-[400px]:max-sm:text-base sm:text-lg"
                   onClick={handleCancelappointment}
+                  disabled={loading}
                 >
-                  Yes
+                  {loading ? "Booking..." : "Yes"}
                 </button>
                 <button
                   type="button"
-                  className="bg-red-600 px-5 py-1 cursor-pointer text-white rounded-lg text-lg"
+                  className="bg-red-600 px-5 py-1 cursor-pointer text-white rounded-lg text-sm min-[400px]:max-sm:text-base sm:text-lg"
                   onClick={handleClickModal}
                 >
                   No

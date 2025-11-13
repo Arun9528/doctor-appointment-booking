@@ -1,5 +1,5 @@
 "use client"
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { useEffect, useState } from "react";
 type categoryProps = Array<{ _id: string; name: string }>
 export default function useGetCategory():categoryProps {

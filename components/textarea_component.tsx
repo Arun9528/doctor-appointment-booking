@@ -29,7 +29,7 @@ export default function TextArea_Component<T extends doctorCancelForm | doctorFo
 }: textAreaProps<T>) {
   return (
     <div className={`relative ${divStyle}`}>
-      <label htmlFor={label} className="text-[#5e5e5e] font-medium pl-1">
+      <label htmlFor={label} className="text-[#5e5e5e] dark:text-white font-medium pl-1">
         {label}
       </label>
       <textarea

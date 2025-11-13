@@ -1,5 +1,5 @@
 "use client";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { Route } from "next";
 import { useRouter } from "next/navigation";
 
@@ -15,16 +15,16 @@ export default function DashBoardLogoutBtn({dashboardTitle}:{dashboardTitle:stri
       console.error("Logout failed:", err);
     } finally {
       if(dashboardTitle === "admin"){
-        route.replace("/admin-login" as Route)
+        route.replace("/")
       }else{
-           route.replace("/doctor-login" as Route);
+           route.replace("/");
       }
     }
   };
   return (
     <button
       type="button"
-      className="bg-sky-600 px-8 py-1.5 rounded-4xl text-white cursor-pointer"
+      className="bg-sky-600 px-4 md:px-8 py-1 md:py-1.5 rounded-4xl text-white cursor-pointer text-[10px] min-[400px]:max-sm:text-xs md:text-sm"
       onClick={handleClick}
     >
       Logout

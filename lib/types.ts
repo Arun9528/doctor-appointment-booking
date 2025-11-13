@@ -57,7 +57,7 @@ export interface myAppointment{
   timeSlot:string;
   providerId:miniDoctorData
  _id:string;
-  status:"pending" | "cancelled" | "confirmed" ;
+  status:"pending" | "cancelled" | "confirmed" | "completed";
   cancellation:cancellationProp
   createdAt:string;
 }

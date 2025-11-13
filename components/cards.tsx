@@ -1,9 +1,10 @@
 import { DoctorListProps } from "@/app/(dashboard)/admin/doctors-list/page";
-import { IMAGE_URL } from "@/base";
+
 import { doctorData } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import Doc_Isavailable_Delete_Comp from "./doc_isavailable_delete_comp";
+import { IMAGE_URL } from "@/lib/config";
 interface CardsProps<T extends doctorData | DoctorListProps> {
   data: T;
   showAvaiable: boolean;
@@ -13,8 +14,8 @@ export default async function  Cards<T extends doctorData | DoctorListProps>({
   showAvaiable = false,
 }: CardsProps<T>) {
   return (
-    <div className={` border border-[#C9D8FF] dark:border-gray-800 shadow-md w-60 h-[350px] rounded-lg overflow-hidden flex flex-col 
-    ${showAvaiable ? "" : "transform_animation"}`}>
+    <div className={` border border-[#C9D8FF] dark:border-gray-800 shadow-md w-64 sm:w-60 h-[350px] rounded-lg overflow-hidden
+       flex flex-col ${showAvaiable ? "" : "transform_animation"}`}>
       <div className="bg-[#EAEFFF] dark:bg-transparent h-60 relative overflow-hidden">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200px] h-[200px]">
           <Image
@@ -32,10 +33,6 @@ export default async function  Cards<T extends doctorData | DoctorListProps>({
         px-3 py-1 w-fit rounded-4xl">
           {data?.category?.name}
         </p>
-        {/* <div className="flex  items-center gap-x-2">
-                 <p className="size-2 rounded-full bg-green-500"></p>
-                 <p className="text-xs font-medium text-green-400">Available</p>
-              </div> */}
         <p className="font-semibold text-lg text-[#1F2937] dark:text-white/85">
           {data?.name}
         </p>

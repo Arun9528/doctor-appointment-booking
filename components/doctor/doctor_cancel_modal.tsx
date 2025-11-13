@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Inputs from "../inputs";
 import TextArea_Component from "../textarea_component";
 import Submit_Cancel_Form_Btn from "../submit_cancel_form_btn";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { useRouter } from "next/navigation";
 
 interface doctorCancelProp {
@@ -56,7 +56,7 @@ export default function Doctor_Cancel_Modal({
   };
   return (
     <section>
-       <h1 className="text-xl font-bold mb-3.5">Canceling Appointment</h1>
+       <h1 className="text-xl font-bold mb-3.5 text-start">Canceling Appointment</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
         <Inputs
           inputType="text"

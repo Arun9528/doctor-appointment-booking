@@ -1,8 +1,7 @@
 "use client";
 
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import Inputs from "@/components/inputs";
-// import { useUser } from "@/hooks/userProvider";
 import { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,7 +14,6 @@ export interface signUpForm {
 }
 export default function UserSignUp(){
   const route = useRouter()
-  // const {setUser} = useUser();
   const {
     handleSubmit,
     register,watch,
@@ -42,9 +40,6 @@ export default function UserSignUp(){
         alert(result?.message || "Signup failed");
         return;
       }
-      console.log("Signup success:", result);
-      // setUser(result?.user)
-     
       route?.replace ("/user/registration" as Route);
        reset();
     } catch (error) {
@@ -54,45 +49,45 @@ export default function UserSignUp(){
     reset()
   };
   return (
-    <section className="w-fit  py-8 px-7 border border-gray-300 rounded-lg space-y-4 shadow-xl">
-      <h2 className="text-3xl text-center font-bold text-[#5e5e5e]">Sign Up</h2>
+    <section className="w-fit  py-8 px-7 border border-gray-300 dark:border-gray-600 rounded-lg space-y-4 shadow-xl">
+      <h2 className="text-3xl text-center font-bold text-[#5e5e5e] dark:text-white">Sign Up</h2>
       <form onSubmit={handleSubmit(onSubmit)}  className="space-y-3.5">
         <Inputs
           inputType="text"
           label="Name"
           name="name"
           register={register}
-          validation={{ required: "Name is Required" }}
+          validation={{ required: "Name is Required",minLength:{value:3,message:"Name Must be at least 3 Charcter"} }}
           placeholder="Enter your Name."
           error={errors?.name}
-          divStyle="w-80"
+          divStyle="w-60 min-[400px]:max-sm:w-72 sm:w-80"
         />
         <Inputs
-          inputType="text"
+          inputType="email"
           label="Email"
           name="email"
           register={register}
-          validation={{ required: "Email is Required" }}
+          validation={{ required: "Email is Required",pattern:{value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,message:"Please enter a valid email format"} }}
           placeholder="Enter your Email."
           error={errors?.email}
-          divStyle="w-80"
+          divStyle="w-60 min-[400px]:max-sm:w-72 sm:w-80"
         />
         <Inputs
           inputType="password"
           label="Password"
           name="password"
           register={register}
-          validation={{ required: "Password is Required" }}
+          validation={{ required: "Password is Required",minLength:{value:8,message:"Password must be at least 8 char"}}}
           placeholder="Enter your Password."
           error={errors?.password}
-          divStyle="w-80"
+          divStyle="w-60 min-[400px]:max-sm:w-72 sm:w-80"
         />
         <Inputs
           inputType="password"
           label="Confrim Password"
           name="confirmPassword"
           register={register}
-          validation={{ required: "Confirm Password is Required",
+          validation={{ required: "Confirm Password is Required",minLength:{value:8,message:"Password must be at least 8 char"},
             validate:{
                 checkMatch: (val) => {
                     const getValue = watch("password");
@@ -102,11 +97,11 @@ export default function UserSignUp(){
           }}
           placeholder="Re-enter your Password."
           error={errors?.confirmPassword}
-          divStyle="w-80"
+          divStyle="w-60 min-[400px]:max-sm:w-72 sm:w-80"
         />
         <button
           type="submit"
-          className="w-full rounded-lg bg-[#5f6fff] text-white py-2 cursor-pointer font-medium mt-2"
+          className="w-full rounded-lg bg-[#5f6fff] text-white py-1.5 sm:py-2 cursor-pointer font-medium mt-2 max-sm:text-sm"
         >
           Get Started
         </button>

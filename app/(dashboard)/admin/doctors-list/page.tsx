@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import Cards from "@/components/cards";
 
 import { Metadata } from "next";
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: "Doctor List",
   description: "In this Page Admin Select the Doctor show or not in Website",
 };
+export const dynamic = "force-dynamic";
 export default async function DoctorList() {
   try {
     const res = await fetch(`${BASE_URL}doctors`,{method:"GET",credentials:"include",cache:"no-store"});
@@ -24,7 +25,7 @@ export default async function DoctorList() {
     return (
       <section className="p-4">
         <h1 className="text-2xl font-medium">All Doctor</h1>
-        <div className="grid grid-cols-4 gap-y-8 mt-5  justify-center">
+        <div className="flex flex-wrap gap-10 mt-5 justify-center  ">
            {
              doctorList?.length > 0 ? (
               doctorList?.map(doc => (<Cards key={doc?._id} data={doc} showAvaiable={true} />))

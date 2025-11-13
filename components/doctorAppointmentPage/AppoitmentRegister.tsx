@@ -7,12 +7,11 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import isSlotInPast from "@/utils/isSlotInPast";
 import { useEffect, useState } from "react";
 import { doctorData } from "@/lib/types";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import Submit_Cancel_Form_Btn from "../submit_cancel_form_btn";
 interface AppointmentForm {
   appointmentDate: Date;
   appointmentTime: string;
-  // note?: string;
 }
 interface AppointmentProps {
   handleClickModal: () => void;
@@ -26,7 +25,7 @@ export default function AppointmentRegister({
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const now = new Date();
   const {
-    // register,
+  
     handleSubmit,
     reset,
     formState: { errors,isSubmitting },
@@ -36,7 +35,6 @@ export default function AppointmentRegister({
     defaultValues: {
       appointmentDate: now,
       appointmentTime: "",
-      // note: "",
     },
     mode: "onChange",
   });
@@ -89,7 +87,7 @@ export default function AppointmentRegister({
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-2 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 max-md:gap-4 items-stretch">
           <div className="space-y-2 flex flex-col">
             <div className="flex items-center gap-2">
               <LuCalendarDays className="text-sky-600 text-xl" />
@@ -110,7 +108,7 @@ export default function AppointmentRegister({
                       return date < now;
                     }}
                     defaultMonth={field?.value ?? now}
-                    className="rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-900 w-72 h-full shadow-md px-3 pb-7 "
+                    className="rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-900 w-full md:w-72 h-full shadow-md px-3 pb-7 "
                   />
                   {errors?.appointmentDate && (
                     <p className=" absolute top-full text-xs text-red-600 font-medium">
@@ -134,7 +132,7 @@ export default function AppointmentRegister({
                 <div
                   role="radiogroup"
                   aria-label="Available time slots"
-                  className={`grid grid-cols-3 gap-2 border rounded-lg py-3.5 px-2 shadow-md w-80 relative
+                  className={`flex flex-wrap justify-between gap-2 border rounded-lg py-3.5 px-2 shadow-md w-full sm:w-80 relative
                      ${
                        errors?.appointmentTime
                          ? "border-red-600"
@@ -180,28 +178,6 @@ export default function AppointmentRegister({
             />
           </div>
         </div>
-        {/* <textarea
-          {...register("note")}
-          id="note"
-          rows={4}
-          className="w-full border border-gray-300 rounded-lg shadow-md p-3 outline-none focus:border-sky-600"
-          placeholder="Note (optional)"
-        ></textarea> */}
-        {/* <div className="flex items-center justify-end gap-x-3">
-          <button
-            type="button"
-            onClick={handleClickModal}
-            className="bg-red-600 text-white px-3 py-1.5 rounded-md text-sm cursor-pointer"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="bg-sky-600 text-white px-3 py-1.5 rounded-md text-sm cursor-pointer"
-          >
-            Submit
-          </button>
-        </div> */}
         <Submit_Cancel_Form_Btn handleClickModal={handleClickModal} isSubmitting={isSubmitting}/>
       </form>
     </section>

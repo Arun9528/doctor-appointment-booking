@@ -8,7 +8,7 @@ import TextArea_Component from "../textarea_component";
 import Submit_Cancel_Form_Btn from "../submit_cancel_form_btn";
 import { useEffect } from "react";
 import { IoClose } from "react-icons/io5";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { useRouter } from "next/navigation";
 
 interface DoctorProfileProps {
@@ -16,7 +16,7 @@ interface DoctorProfileProps {
   handleClickModal: () => void;
 }
 export type doctorForm = Omit<doctorData,"category" | "patients_appointments" | "education"> &
- { category: string,education:{name:string}[] };
+ { category: string,education:any[] };
 export default function Doctor_Profile({
   doctorData,
   handleClickModal,
@@ -34,7 +34,7 @@ export default function Doctor_Profile({
       name: doctorData?.name || "",
       gender: doctorData?.gender || undefined,
       age: doctorData?.age || 0,
-      education: doctorData?.education ?? [""],
+      education: doctorData?.education ?? [{name:""}],
       experienceYears: doctorData?.experienceYears || 0,
       about: doctorData?.about || "",
       appointmentFee: doctorData?.appointmentFee || 0,
@@ -105,7 +105,7 @@ export default function Doctor_Profile({
       <h1 className="text-2xl font-bold mb-4">Doctor Profile</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className=" gap-3 grid grid-cols-3"
+        className=" gap-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
       >
         <Inputs
           inputType="text"
@@ -164,7 +164,7 @@ export default function Doctor_Profile({
         />
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="text-[#5e5e5e] font-medium">Gender</h2>
+            <h2 className="text-[#5e5e5e] dark:text-white font-medium">Gender</h2>
             <div className="relative flex items-center gap-x-2 mt-1">
               <Inputs
                 inputType="radio"
@@ -203,7 +203,7 @@ export default function Doctor_Profile({
               />
               <label
                 htmlFor="available"
-                className="font-medium text-black/70 "
+                className="font-medium text-black/70 dark:text-white "
               >
                 Available
               </label>
@@ -221,7 +221,7 @@ export default function Doctor_Profile({
             id="doctor-specialist"
             defaultValue={doctorData?.category?._id ?? ""}
             {...register("category", { required: "Specialist is Required" })}
-            className={`outline-0 border rounded-md px-3 py-2 w-full text-sm 
+            className={`outline-0 border rounded-md px-3 py-2 w-full text-sm dark:bg-gray-900
              ${errors?.category ? "border-red-500" : "border-gray-300"}`}
           >
             {getCategory?.map((spec) => (
@@ -245,15 +245,15 @@ export default function Doctor_Profile({
             id="doctor_profile_photo"
             {...register("profile_photo")}
             className={
-              "w-full py-2 px-3 border outline-0 rounded-md text-black/70 border-gray-300 text-sm"
+              "w-full py-2 px-3 border outline-0 rounded-md text-black/70 dark:text-white border-gray-300 text-sm"
             }
             accept="image/jpeg,image/png"
           />
         </div>
 
-        <div className="col-span-3 ">
+        <div className="md:col-span-2 lg:col-span-3 shrink-0 ">
           <label className="block mb-1 label-title">Education(Degree)</label>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {fields?.map((field, i) => (
               <div key={field?.id} className="flex items-center gap-2 mb-2">
                 <input
@@ -296,12 +296,12 @@ export default function Doctor_Profile({
           validation={{ required: "About is Required" }}
           placeholder="Write Something About yourself."
           error={errors?.about}
-          divStyle="col-span-3"
+          divStyle="md:col-span-2 lg:col-span-3"
         />
         <Submit_Cancel_Form_Btn
           handleClickModal={handleClickModal}
           isSubmitting={isSubmitting}
-          divStyle="justify-center col-span-3"
+          divStyle="justify-center md:col-span-2 lg:col-span-3"
         />
       </form>
     </section>

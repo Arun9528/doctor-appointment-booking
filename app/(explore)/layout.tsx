@@ -1,26 +1,12 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono, } from "next/font/google";
 import { Outfit } from "next/font/google";
 import "@/app/globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { BASE_URL } from "@/base";
-import { cookies } from "next/headers";
-import FetchingCookies from "@/utils/auth";
 import CheckingAuth from "@/utils/checkingAuth";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 const geistOutfit = Outfit({
   subsets: ["latin"],
-  // variable:'--font-outfit'
 });
 export const metadata: Metadata = {
   title: "Name",
@@ -36,7 +22,6 @@ export default async function AppointmentLayout({
   return (
     <html lang="en">
       <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
         className={`antialiased min-h-screen ${geistOutfit} dark:bg-gray-900`}
       >
         <Header userCookie={Auth} />

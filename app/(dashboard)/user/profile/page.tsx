@@ -1,4 +1,4 @@
-import { BASE_URL, IMAGE_URL } from "@/base";
+import { BASE_URL, IMAGE_URL } from "@/lib/config";
 import EditUserProfile from "@/components/editProfile";
 import { UserData } from "@/lib/types";
 import CheckingAuth from "@/utils/checkingAuth";
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Profile",
   description: "This is User Profile Page ",
 };
+export const dynamic = "force-dynamic";
 export default async function UserProfile() {
   try {
     const cookieStore = await cookies();
@@ -35,7 +36,7 @@ export default async function UserProfile() {
     }
     const UserProfileData: { user: UserData } = await res.json();
     return (
-      <section className="px-20 flex flex-col items-center pt-10 gap-3 relative">
+      <section className="responsive_left-right_padding flex flex-col items-center !pt-10 gap-3 relative">
       <EditUserProfile authData={userAuth}  ProfileData={UserProfileData?.user} isUserProfile={true}/>
         <Image
           src={userAuth?.photo ? `${IMAGE_URL}${userAuth.photo}` : "/dog.png"}
@@ -44,15 +45,15 @@ export default async function UserProfile() {
           height={200}
           unoptimized
           loading="eager"
-          style={{ width: "200px", height: "200px", objectFit: "cover",borderRadius:"50%"}}
+          className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] object-cover rounded-full"
         />
-        <h2 className="text-2xl text-[#5e5e5e]  font-bold capitalize">
+        <h2 className="text-2xl text-[#5e5e5e] dark:text-white font-bold capitalize">
           {userAuth?.name}
         </h2>
-        <section className="grid grid-cols-2 justify-between w-full gap-x-6 mt-5">
-          <div className="border border-gray-300 rounded-lg shadow-md  p-3">
+        <section className="grid grid-cols-1 sm:grid-cols-2 sm:justify-between w-full max-sm:gap-y-6 sm:gap-x-6 mt-5">
+          <div className="border border-gray-300 dark:border-gray-700 rounded-lg shadow-md  p-3">
             <h3 className="font-semibold text-lg">Contact Information</h3>
-            <div className="grid grid-cols-2 gap-2 mt-4">
+            <div className="grid lg:grid-cols-2 gap-2 mt-4">
               <p>
                 <span className="text-[#5e5e5e] font-medium">Email Id : </span>{" "}
                 <span>{userAuth?.email}</span>
@@ -67,9 +68,9 @@ export default async function UserProfile() {
               </p>
             </div>
           </div>
-          <div className="border border-gray-300 rounded-lg shadow-md  p-3">
+          <div className="border border-gray-300 dark:border-gray-700 rounded-lg shadow-md  p-3">
             <h3 className="font-semibold text-lg">Basic Information</h3>
-            <div className="grid grid-cols-2 gap-2 mt-4">
+            <div className="grid lg:grid-cols-2 gap-2 mt-4">
               <p>
                 <span className="text-[#5e5e5e] font-medium">Gender : </span>{" "}
                 <span>{UserProfileData?.user?.gender}</span>

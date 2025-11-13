@@ -1,4 +1,4 @@
-import { BASE_URL, IMAGE_URL } from "@/base";
+import { BASE_URL, IMAGE_URL } from "@/lib/config";
 import { Admin_All_Appointment } from "@/lib/types";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Doctors Appointments",
   description: "In This Page All Appointments doctors Received by Patients.",
 };
+export const dynamic = "force-dynamic";
 export default async function DoctorsAppointments() {
   try {
     const cookieStore = await cookies();
@@ -26,21 +27,21 @@ export default async function DoctorsAppointments() {
     }
     const getData = await res.json();
     const appointmentList: Admin_All_Appointment = getData?.data;
-    // console.log(appointmentList);
     return (
-      <section className="p-5">
+      <section className="p-5 overflow-hidden">
         <h1 className="text-2xl font-bold ">All Appointments</h1>
-        <div className="border rounded-lg overflow-hidden mt-6">
+        <div className="overflow-x-scroll mt-6">
+        <div className="border rounded-lg w-4xl lg:w-full">
         <table className="w-full table-fixed border-collapse ">
           <thead>
-            <tr className="border-b bg-gray-100">
+            <tr className="border-b bg-gray-100 dark:bg-gray-800">
               <th className="w-20">Sr.No</th>
               <th>Doctor</th>
               <th className="w-20">Age</th>
               <th className="w-52">Date & Time</th>
               <th>Patient</th>
               <th className="w-20">Fees</th>
-              <th className="w-36">Status</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +58,7 @@ export default async function DoctorsAppointments() {
                       alt="Patient Photo"
                       width={70}
                       height={70}
-                      className="size-10 rounded-full object-contain bg-gray-300"
+                      className="size-10 rounded-full object-contain bg-gray-300 shrink-0"
                       unoptimized
                     />
                     <span className="capitalize">
@@ -113,6 +114,7 @@ export default async function DoctorsAppointments() {
           </tbody>
         </table>
       </div>
+        </div>
       </section>
     );
   } catch (error) {

@@ -10,7 +10,7 @@ export default function Doctorlogin(){
     return (
           <main className="min-h-screen center_content">
                 <LoginIn headingName="Doctor" paraTitle="Admin Login? " linkRoute={"/admin-login" as Route}
-                IsspanTag = {true} headingStyle="text-sky-600"
+                IsspanTag = {true} headingStyle="text-sky-600" loginProps={{email:"gp_001@example.com",password:"12345678"}}
                 />
           </main>
     )

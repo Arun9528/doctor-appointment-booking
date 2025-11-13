@@ -1,4 +1,4 @@
-import { BASE_URL, IMAGE_URL } from "@/base";
+import { BASE_URL, IMAGE_URL } from "@/lib/config";
 import EditProfile from "@/components/editProfile";
 import { doctorData } from "@/lib/types";
 import CheckingAuth from "@/utils/checkingAuth";
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Doctor Profile",
   description: "Thsi Page Show doctor Profile",
 };
+export const dynamic = "force-dynamic";
 export type ModifyDoctorData = Omit<doctorData,"education"> & {education:string[]}
 export default async function DoctorProfile() {
   try {
@@ -26,7 +27,7 @@ export default async function DoctorProfile() {
     if (!res.ok) throw new Error(`fetching error ${res?.status}`);
     const doctorDetails:ModifyDoctorData = await res.json();
     return (
-      <section className="p-5 space-y-4">
+      <section className="p-5 space-y-4 relative">
         <EditProfile authData={doctorAuth}  ProfileData={doctorDetails} isUserProfile={false}/>
         <div className="justify-items-center">
             <Image
@@ -34,13 +35,13 @@ export default async function DoctorProfile() {
               alt="doctor Profile Photo"
               width={176}
               height={176}
-              className="size-44 rounded-full bg-gray-100 object-contain shadow-md bg-center "
+              className="size-36 sm:size-44 rounded-full bg-gray-100 object-contain shadow-md bg-center "
               unoptimized
             />
-          <h1 className="text-2xl font-semibold">{doctorDetails?.name}</h1>
+          <h1 className="text-xl sm:text-2xl font-semibold">{doctorDetails?.name}</h1>
         </div>
 
-        <div className="grid grid-cols-2 border border-gray-300 rounded-2xl p-4 shadow-md">
+        <div className="grid grid-cols-1 sm:grid-cols-2 border border-gray-300 dark:border-gray-700 rounded-2xl p-4 shadow-md">
           <p>
             <span className="doctor-details-heading">Age: </span>
             <span className="doctor-details-title">
@@ -93,7 +94,7 @@ export default async function DoctorProfile() {
           </p>
         </div>
 
-        <div className="border border-gray-300 rounded-2xl p-4 shadow-md">
+        <div className="border border-gray-300 dark:border-gray-700 rounded-2xl p-4 shadow-md">
           <p className="doctor-details-heading">About</p>
           <p className="doctor-details-title">
             {doctorDetails?.about}
@@ -113,7 +114,7 @@ export default async function DoctorProfile() {
               doctorDetails?.isAvailable ? "bg-green-600" : "bg-red-600"
             }`}
           ></span>
-          <span className="font-medium text-sm text-black/90"> {doctorDetails?.isAvailable ? "Available" : "Not Available" }</span>
+          <span className="font-medium text-sm text-black/90 dark:text-white/80"> {doctorDetails?.isAvailable ? "Available" : "Not Available" }</span>
         </p>
       </section>
     );

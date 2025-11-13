@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { loginData } from "@/components/Auth/loginIn";
 interface loginBody{
     email:string;

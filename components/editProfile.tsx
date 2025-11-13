@@ -23,14 +23,15 @@ export default function EditProfile<T extends UserData | doctorData>({
     <div>
       <button
         type="button"
-        className="bg-sky-600 text-white rounded-lg text-sm px-4 py-2 cursor-pointer absolute right-20"
+        className="bg-sky-600 text-white rounded-lg text-sm max-sm:px-2 max-sm:py-1.5 sm:px-4 py-2 cursor-pointer absolute 
+        right-3 sm:right-5 lg:right-10 max-sm:top-3 max-sm:text-xs"
         onClick={handleClickModal}
       >
         Edit Profile
       </button>
       <AnimatePresence mode="wait">
         {showModal && (
-          <Modal handleClickModal={handleClickModal} sectionStyle={`${isUserProfile ? "" : "w-5xl" }`}>
+          <Modal handleClickModal={handleClickModal} sectionStyle={`${isUserProfile ? "" : "overflow-y-scroll max-md:!h-[42rem] w-72 min-[400px]:max-md:w-96 md:w-3xl lg:w-5xl" }`}>
             {isUserProfile ? (<User_Registration_Page
               isEdit={true}
               headingTitle="Edit Profile"

@@ -74,7 +74,7 @@ export default function Inputs<
     <div className={`relative ${divStyle}`}>
       <label
         htmlFor={`${label}-${inputType}`}
-        className={`text-[#5e5e5e] font-medium pl-1 ${labelStyle}`}
+        className={`text-[#5e5e5e] dark:text-white font-medium pl-1 ${labelStyle}`}
       >
         {label}
       </label>
@@ -87,7 +87,7 @@ export default function Inputs<
         placeholder={placeholder}
         className={`w-full py-2 px-3 border outline-0 rounded-md text-sm
         ${error ? "border-red-500" : "border-gray-300"}
-        ${disabled ? "bg-gray-300 cursor-not-allowed text-gray-500" : ""}
+        ${disabled ? "bg-gray-300 cursor-not-allowed text-gray-500 dark:text-gray-400 dark:bg-gray-700" : ""}
         `}
         autoComplete="off"
         disabled={disabled}
@@ -105,7 +105,7 @@ export default function Inputs<
         <button
           type="button"
           className={`absolute right-3.5 top-1/2 translate-1  cursor-pointer
-         ${error ? "text-red-500" : "text-black/80"}`}
+         ${error ? "text-red-500" : "text-black/80 dark:text-white/80"}`}
           onClick={handleClick}
         >
           {showPwd ? <FaEye /> : <FaEyeSlash />}

@@ -4,28 +4,32 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Inputs from "../inputs";
 import { useRouter } from "next/navigation";
 import { Route } from "next";
-import { BASE_URL } from "@/base";
+import { BASE_URL } from "@/lib/config";
 import { cookiesProps } from "@/utils/auth";
 import { UserData } from "@/lib/types";
 
 export interface userRegistrationForm {
   name: string;
   email: string;
-  phone_no: string ;
+  phone_no: string;
   age: string;
   gender: "Male" | "Female" | null;
   address: string;
   profile_photo: FileList | string | undefined;
 }
-interface userRegistrationProps{
+interface userRegistrationProps {
   userReg: cookiesProps;
   userData?: UserData | null;
-  isEdit:boolean
-  headingTitle:string;
-  handleClickModal?: () => void 
+  isEdit: boolean;
+  headingTitle: string;
+  handleClickModal?: () => void;
 }
 export default function User_Registration_Page({
-  userReg,isEdit = false,headingTitle = " ",userData,handleClickModal
+  userReg,
+  isEdit = false,
+  headingTitle = " ",
+  userData,
+  handleClickModal,
 }: userRegistrationProps) {
   const route = useRouter();
   const {
@@ -41,23 +45,22 @@ export default function User_Registration_Page({
       age: userData?.age || "",
       gender: userData?.gender || null,
       address: userData?.address || "",
-      profile_photo:  undefined,
+      profile_photo: undefined,
     },
     mode: "onChange",
   });
-  // const today = new Date().toISOString().split("T")[0];
-  const onSubmit: SubmitHandler<userRegistrationForm> = async(data) => {
+  const onSubmit: SubmitHandler<userRegistrationForm> = async (data) => {
     if (!userReg?._id) {
       console.log("id not found");
       route.push("/user/login" as Route);
       return;
     }
- 
+
     const formData = new FormData();
-    if (userReg?.name?.toLowerCase() !== data?.name.toLowerCase().trim()){
-       formData?.append("name", data?.name);
+    if (userReg?.name?.toLowerCase() !== data?.name.toLowerCase().trim()) {
+      formData?.append("name", data?.name);
     }
-    if (isEdit && data?.email) formData?.append("email",data?.email)
+    if (isEdit && data?.email) formData?.append("email", data?.email);
     if (data?.phone_no) formData?.append("phone_no", data?.phone_no);
     if (data?.age) formData?.append("age", data?.age);
     if (data?.gender) formData?.append("gender", data?.gender);
@@ -66,7 +69,7 @@ export default function User_Registration_Page({
       const file = data?.profile_photo[0];
       formData?.append("profile_photo", file);
     }
-   
+
     try {
       const res = await fetch(`${BASE_URL}users/${userReg?._id}`, {
         method: "PATCH",
@@ -85,12 +88,12 @@ export default function User_Registration_Page({
         alert(updated?.message || "Update failed");
         return;
       }
-      if(!isEdit){
+      if (!isEdit) {
         route.push("/user/profile" as Route);
-      }else{
+      } else {
         route.refresh();
       }
-      handleClickModal?.()
+      handleClickModal?.();
       reset();
     } catch (error) {
       console.error("Update error:", error);
@@ -98,9 +101,20 @@ export default function User_Registration_Page({
     }
   };
   return (
-    <section className={`${isEdit ? "" : "border border-gray-300 p-7 rounded-lg shadow-md"} `}>
+    <section
+      className={`${
+        isEdit
+          ? ""
+          : "border border-gray-300 dark:border-gray-700 p-7 rounded-lg shadow-md w-72 min-[400px]:max-[500px]:w-96 min-[500px]:max-sm:w-md sm:w-xl md:w-[46rem] lg:w-[62rem] max-sm:my-10 "
+      }
+     `}
+    >
       <h1 className="text-3xl font-bold">{headingTitle || "Welcome"}</h1>
-      {!isEdit && <p className="text-[#5e5e5e] text-sm">let us know more about yourself</p>}
+      {!isEdit && (
+        <p className="text-[#5e5e5e] dark:text-white/80 text-sm">
+          let us know more about yourself
+        </p>
+      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={` grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6`}
@@ -110,7 +124,13 @@ export default function User_Registration_Page({
           label="Name"
           name="name"
           register={register}
-          validation={{ required: "Name is Required",minLength:{value:3,message:"Name must be at least 3 characters "}}}
+          validation={{
+            required: "Name is Required",
+            minLength: {
+              value: 3,
+              message: "Name must be at least 3 characters ",
+            },
+          }}
           placeholder="Enter your Name."
           error={errors?.name}
         />
@@ -129,7 +149,13 @@ export default function User_Registration_Page({
           label="Phone No."
           name="phone_no"
           register={register}
-          validation={{ required: "Phone is Required",pattern:{value:/^\d{10}$/,message:"Phone must be exactly 10 digits"} }}
+          validation={{
+            required: "Phone is Required",
+            pattern: {
+              value: /^\d{10}$/,
+              message: "Phone must be exactly 10 digits",
+            },
+          }}
           maxLength={10}
           placeholder="Enter your Phone"
           error={errors?.phone_no}
@@ -144,9 +170,7 @@ export default function User_Registration_Page({
           error={errors?.age}
         />
         <div>
-          <h2 className="text-[#5e5e5e] font-medium">
-            Gender
-          </h2>
+          <h2 className="text-[#5e5e5e] dark:text-white font-medium">Gender</h2>
           <div className="relative flex items-center gap-x-2 mt-1">
             <Inputs
               inputType="radio"
@@ -156,7 +180,7 @@ export default function User_Registration_Page({
               validation={{ required: "Gender is Required" }}
               divStyle="flex flex-row-reverse"
               labelStyle="text-sm"
-              value = "Male"
+              value="Male"
             />
             <Inputs
               inputType="radio"
@@ -187,7 +211,7 @@ export default function User_Registration_Page({
         <div className="relative">
           <label
             htmlFor="user_profile_photo"
-            className="text-[#5e5e5e] font-medium"
+            className="text-[#5e5e5e] font-medium dark:text-white"
           >
             Upload Photo
           </label>
@@ -196,11 +220,10 @@ export default function User_Registration_Page({
             id="user_profile_photo"
             {...register("profile_photo")}
             className={
-              "w-full py-2 px-3 border outline-0 rounded-md text-black/70 border-gray-300"
+              "w-full py-2 px-3 border outline-0 rounded-md text-black/70 dark:text-white/80 border-gray-300 "
             }
             accept="image/jpeg,image/png"
           />
-          {/* <span className="absolute left-10 top-1/2">{userReg?.photo ? userReg?.photo?.split("/")?.pop()?.split("-")[1] : null}</span> */}
         </div>
         <button
           type="submit"

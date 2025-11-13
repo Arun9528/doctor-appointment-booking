@@ -5,7 +5,7 @@ export default function AdminDashBaordLayout({children}:Readonly<{children:React
     return (
         <div className="min-h-screen">
             <DashBoardHeader loginTitle="Admin"/>
-            <main className="grid grid-cols-[15%_85%]">
+            <main className="flex">
                 <DashBoardSidebar isAdmin={true}/>
                 {children}
             </main>

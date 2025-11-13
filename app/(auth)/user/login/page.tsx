@@ -18,6 +18,7 @@ export default async function Login() {
       headingName="Login"
       paraTitle="Create an new account?"
       linkRoute={"/user/sign-up" as Route}
+      loginProps={{email:"test@gmail.com",password:"1"}}
     />
   );
 }
