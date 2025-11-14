@@ -5,12 +5,23 @@ const nextConfig: NextConfig = {
   images: {
     // unoptimized: true,
     remotePatterns: [
+      // {
+      //   protocol: 'http',
+      //   hostname: 'localhost',
+      //   port: '8000',
+      //   pathname: '/assets/docPhotos/**',
+      // },
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
-        pathname: '/assets/docPhotos/**',
+        protocol:"https",
+        hostname:"backend-doctor-appointment-booking.onrender.com",
+        pathname:'/assets/docPhotos/**'
       },
+      {
+        protocol:"https",
+        hostname:"backend-doctor-appointment-booking.onrender.com",
+        pathname:'/assets/userPhotos/**'
+      }
+      
       // {
       //   protocol: 'http',
       //   hostname: '127.0.0.1',
