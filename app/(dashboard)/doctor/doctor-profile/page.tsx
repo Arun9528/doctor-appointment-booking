@@ -36,7 +36,7 @@ export default async function DoctorProfile() {
               width={176}
               height={176}
               className="size-36 sm:size-44 rounded-full bg-gray-100 object-contain shadow-md bg-center "
-              unoptimized
+              // unoptimized
             />
           <h1 className="text-xl sm:text-2xl font-semibold">{doctorDetails?.name}</h1>
         </div>

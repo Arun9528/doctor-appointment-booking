@@ -46,7 +46,7 @@ export default async function MyAppointments() {
                   alt="doctor photo"
                   width={100}
                   height={100}
-                  unoptimized
+                  // unoptimized
                   className="w-[150px] h-[150px] object-contain"
                 />
               </div>

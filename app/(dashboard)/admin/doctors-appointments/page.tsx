@@ -59,7 +59,7 @@ export default async function DoctorsAppointments() {
                       width={70}
                       height={70}
                       className="size-10 rounded-full object-contain bg-gray-300 shrink-0"
-                      unoptimized
+                      // unoptimized
                     />
                     <span className="capitalize">
                       {appointment?.providerId?.name}
@@ -81,7 +81,7 @@ export default async function DoctorsAppointments() {
                       width={70}
                       height={70}
                       className="size-10 rounded-full object-cover bg-gray-300"
-                      unoptimized
+                      // unoptimized
                     />
                     <span className="capitalize">
                       {appointment?.userId?.name}

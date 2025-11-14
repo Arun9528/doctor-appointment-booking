@@ -130,8 +130,8 @@ export default function Header({ userCookie }: headerProps) {
                 alt="profile Photo"
                 width={100}
                 height={100}
-                unoptimized
-                loading="eager"
+                // unoptimized
+                // loading="eager"
                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
               />
             </button>

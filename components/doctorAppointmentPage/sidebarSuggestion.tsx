@@ -34,7 +34,7 @@ export default async function SidebarSuggestion({specialty,doctorId}:sidebarSugg
                   width={70}
                   height={70}
                   className="object-cover"
-                  unoptimized
+                  // unoptimized
                 />
               </div>
               <div>

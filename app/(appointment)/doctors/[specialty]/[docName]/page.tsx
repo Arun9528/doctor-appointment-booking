@@ -32,7 +32,7 @@ export default async function DocAppointment(props: PageProps<"/doctors/[special
                     alt="Doctor Photo"
                     width={140}
                     height={140}
-                    unoptimized
+                    // unoptimized
                     className="object-contain w-[140px] h-[140px] shrink-0"
                     priority
                   />

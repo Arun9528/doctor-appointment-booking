@@ -23,7 +23,7 @@ export default async function  Cards<T extends doctorData | DoctorListProps>({
             alt="doctorPhoto"
             fill
             priority
-            unoptimized
+            // unoptimized
             className="object-contain"
           />
         </div>

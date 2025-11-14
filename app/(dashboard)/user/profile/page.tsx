@@ -43,8 +43,8 @@ export default async function UserProfile() {
           alt="User Profile Photo"
           width={200}
           height={200}
-          unoptimized
-          loading="eager"
+          // unoptimized
+          // loading="eager"
           className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] object-cover rounded-full"
         />
         <h2 className="text-2xl text-[#5e5e5e] dark:text-white font-bold capitalize">

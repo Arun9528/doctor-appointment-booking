@@ -58,7 +58,7 @@ export default async function DoctorAppointment() {
                       alt="Patient Photo"
                       width={70}
                       height={70}
-                      unoptimized
+                      // unoptimized
                     />
                   </div>
                   <span className="capitalize">{patient?.userId?.name}</span>

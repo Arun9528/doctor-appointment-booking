@@ -80,7 +80,7 @@ export default async function DoctorDashBoard() {
                     width={50}
                     height={50}
                     className="bg-center w-full h-full object-cover "
-                    unoptimized
+                    // unoptimized
                   />
                 </div>
                 <div>
