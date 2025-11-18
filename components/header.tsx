@@ -246,9 +246,9 @@ export default function Header({ userCookie }: headerProps) {
                   </div>
                 );
               })}
-              <Link href={"/user/login" as Route} className=" cursor-pointer font-medium max-sm:block hidden "> Login</Link>
-              <Link href={"/user/sign-up" as Route} className=" cursor-pointer font-medium max-sm:block hidden"> Sign Up</Link>
-              <Link href={"/admin/admin-login" as Route} className=" cursor-pointer font-medium max-sm:block hidden"> Doctor Login</Link>
+              <Link href={"/user/login" as Route} className=" max-sm:inline-block hidden "> Login</Link>
+              <Link href={"/user/sign-up" as Route} className="   max-sm:inline-block hidden"> Sign Up</Link>
+              <Link href={"/admin-login" as Route} className="  max-sm:inline-block hidden"> Doctor Login</Link>
             </motion.nav>
           </motion.aside>
         )}

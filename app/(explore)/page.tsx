@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 import styles from "@/components/compoents_style_css/home.module.css"
+import { Suspense } from "react";
 
 export const typeDoctor = [
   "General physician",
@@ -94,7 +95,10 @@ export default function Home() {
             Simply browse through our extensive list of trusted doctors.
           </p>
         </div>
-        <TopDoctorList />
+        <Suspense fallback={<p className="text-lg font-bold">fetching doctor...</p>}>
+          <TopDoctorList />
+        </Suspense>
+        
         <div className="text-center">
           <Link
             href={"/doctors"}

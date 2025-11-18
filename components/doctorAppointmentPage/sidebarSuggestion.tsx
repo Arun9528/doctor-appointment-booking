@@ -24,7 +24,7 @@ export default async function SidebarSuggestion({specialty,doctorId}:sidebarSugg
                 suggestDoc?._id
               }`}
               key={suggestDoc?._id}
-              className="flex items-center  gap-x-4 hover:bg-gray-200/65 dark:hover:bg-gray-800 cursor-pointer px-5 py-1.5 rounded-lg transition-all duration-300 ease-in-out"
+              className="flex items-center  gap-x-4 hover:bg-gray-200/65 dark:hover:bg-gray-800 cursor-pointer px-5 py-1.5 rounded-lg transition-all duration-300 ease-in-out shrink-0"
               aria-label={`View Profile for ${suggestDoc?.name} `}
             >
               <div className="overflow-hidden border border-gray-300 rounded-full size-16 shrink-0">
